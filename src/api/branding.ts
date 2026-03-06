@@ -29,6 +29,8 @@ export interface TelegramWidgetConfig {
   radius: number;
   userpic: boolean;
   request_access: boolean;
+  oidc_enabled: boolean;
+  oidc_client_id: string;
 }
 
 export interface AnalyticsCounters {
@@ -273,6 +275,8 @@ export const brandingApi = {
         radius: 8,
         userpic: true,
         request_access: true,
+        oidc_enabled: false,
+        oidc_client_id: '',
       };
     }
   },
