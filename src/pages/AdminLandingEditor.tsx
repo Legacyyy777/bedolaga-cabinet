@@ -406,7 +406,11 @@ export default function AdminLandingEditor() {
 
     // Strip _id before sending to API
     const cleanFeatures: AdminLandingFeature[] = features.map(({ _id: _, ...rest }) => rest);
-    const cleanMethods = paymentMethods.map(({ _id: _, ...rest }) => rest);
+    const cleanMethods = paymentMethods.map(({ _id: _, ...rest }) => ({
+      ...rest,
+      description: rest.description || null,
+      icon_url: rest.icon_url || null,
+    }));
 
     // Filter out empty period arrays and periods for non-selected tariffs
     const cleanPeriods = Object.fromEntries(

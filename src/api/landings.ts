@@ -30,8 +30,8 @@ export interface LandingTariff {
 export interface LandingPaymentMethod {
   method_id: string;
   display_name: string;
-  description: string;
-  icon_url: string;
+  description: string | null;
+  icon_url: string | null;
   sort_order: number;
 }
 
