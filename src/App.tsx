@@ -9,6 +9,7 @@ import {
   ChannelSubscriptionScreen,
   BlacklistedScreen,
 } from './components/blocking';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { PermissionRoute } from '@/components/auth/PermissionRoute';
 import { saveReturnUrl } from './utils/token';
 import { useAnalyticsCounters } from './hooks/useAnalyticsCounters';
@@ -37,6 +38,9 @@ const Info = lazy(() => import('./pages/Info'));
 const Wheel = lazy(() => import('./pages/Wheel'));
 const Connection = lazy(() => import('./pages/Connection'));
 const ConnectionQR = lazy(() => import('./pages/ConnectionQR'));
+const QuickPurchase = lazy(() => import('./pages/QuickPurchase'));
+const PurchaseSuccess = lazy(() => import('./pages/PurchaseSuccess'));
+const AutoLogin = lazy(() => import('./pages/AutoLogin'));
 const TopUpMethodSelect = lazy(() => import('./pages/TopUpMethodSelect'));
 const TopUpAmount = lazy(() => import('./pages/TopUpAmount'));
 const ConnectedAccounts = lazy(() => import('./pages/ConnectedAccounts'));
@@ -104,6 +108,8 @@ const AdminRoleAssign = lazy(() => import('./pages/AdminRoleAssign'));
 const AdminPolicies = lazy(() => import('./pages/AdminPolicies'));
 const AdminPolicyEdit = lazy(() => import('./pages/AdminPolicyEdit'));
 const AdminAuditLog = lazy(() => import('./pages/AdminAuditLog'));
+const AdminLandings = lazy(() => import('./pages/AdminLandings'));
+const AdminLandingEditor = lazy(() => import('./pages/AdminLandingEditor'));
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -192,6 +198,36 @@ function App() {
             <LazyPage>
               <MergeAccounts />
             </LazyPage>
+          }
+        />
+        <Route
+          path="/buy/success/:token"
+          element={
+            <ErrorBoundary level="app">
+              <LazyPage>
+                <PurchaseSuccess />
+              </LazyPage>
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/buy/:slug"
+          element={
+            <ErrorBoundary level="app">
+              <LazyPage>
+                <QuickPurchase />
+              </LazyPage>
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/auto-login"
+          element={
+            <ErrorBoundary level="app">
+              <LazyPage>
+                <AutoLogin />
+              </LazyPage>
+            </ErrorBoundary>
           }
         />
 
@@ -472,6 +508,36 @@ function App() {
             <PermissionRoute permission="tariffs:read">
               <LazyPage>
                 <AdminTariffCreate />
+              </LazyPage>
+            </PermissionRoute>
+          }
+        />
+        <Route
+          path="/admin/landings"
+          element={
+            <PermissionRoute permission="landings:read">
+              <LazyPage>
+                <AdminLandings />
+              </LazyPage>
+            </PermissionRoute>
+          }
+        />
+        <Route
+          path="/admin/landings/create"
+          element={
+            <PermissionRoute permission="landings:create">
+              <LazyPage>
+                <AdminLandingEditor />
+              </LazyPage>
+            </PermissionRoute>
+          }
+        />
+        <Route
+          path="/admin/landings/:id/edit"
+          element={
+            <PermissionRoute permission="landings:edit">
+              <LazyPage>
+                <AdminLandingEditor />
               </LazyPage>
             </PermissionRoute>
           }

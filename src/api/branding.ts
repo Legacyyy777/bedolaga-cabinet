@@ -23,6 +23,16 @@ export interface EmailAuthEnabled {
   enabled: boolean;
 }
 
+export interface TelegramWidgetConfig {
+  bot_username: string;
+  size: 'large' | 'medium' | 'small';
+  radius: number;
+  userpic: boolean;
+  request_access: boolean;
+  oidc_enabled: boolean;
+  oidc_client_id: string;
+}
+
 export interface AnalyticsCounters {
   yandex_metrika_id: string;
   google_ads_id: string;
@@ -248,6 +258,26 @@ export const brandingApi = {
       return response.data;
     } catch {
       return { yandex_metrika_id: '', google_ads_id: '', google_ads_label: '' };
+    }
+  },
+
+  // Get Telegram widget config (public, no auth required)
+  getTelegramWidgetConfig: async (): Promise<TelegramWidgetConfig> => {
+    try {
+      const response = await apiClient.get<TelegramWidgetConfig>(
+        '/cabinet/branding/telegram-widget',
+      );
+      return response.data;
+    } catch {
+      return {
+        bot_username: import.meta.env.VITE_TELEGRAM_BOT_USERNAME || '',
+        size: 'large',
+        radius: 8,
+        userpic: true,
+        request_access: true,
+        oidc_enabled: false,
+        oidc_client_id: '',
+      };
     }
   },
 

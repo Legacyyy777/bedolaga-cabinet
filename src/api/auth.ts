@@ -49,6 +49,20 @@ export const authApi = {
     return response.data;
   },
 
+  // Telegram OIDC authentication (popup flow with id_token)
+  loginTelegramOIDC: async (
+    idToken: string,
+    campaignSlug?: string | null,
+    referralCode?: string | null,
+  ): Promise<AuthResponse> => {
+    const response = await apiClient.post<AuthResponse>('/cabinet/auth/telegram/oidc', {
+      id_token: idToken,
+      campaign_slug: campaignSlug || undefined,
+      referral_code: referralCode || undefined,
+    });
+    return response.data;
+  },
+
   // Email login
   loginEmail: async (
     email: string,
@@ -277,6 +291,12 @@ export const authApi = {
     const response = await apiClient.post<{ success: boolean }>(
       `/cabinet/auth/account/unlink/${encodeURIComponent(provider)}`,
     );
+    return response.data;
+  },
+
+  // Auto-login from guest purchase success page
+  autoLogin: async (token: string): Promise<AuthResponse> => {
+    const response = await apiClient.post<AuthResponse>('/cabinet/auth/login/auto', { token });
     return response.data;
   },
 

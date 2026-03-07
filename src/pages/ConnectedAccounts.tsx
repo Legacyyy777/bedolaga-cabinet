@@ -44,7 +44,7 @@ function TelegramLinkWidget() {
     const redirectUrl = `${window.location.origin}/auth/link/telegram/callback?csrf_state=${encodeURIComponent(csrfState)}`;
 
     const script = document.createElement('script');
-    script.src = 'https://telegram.org/js/telegram-widget.js?22';
+    script.src = 'https://telegram.org/js/telegram-widget.js?23';
     script.setAttribute('data-telegram-login', botUsername);
     script.setAttribute('data-size', 'small');
     script.setAttribute('data-radius', '8');
