@@ -3227,7 +3227,29 @@
       "discountOverrides": "Per-tariff overrides",
       "discountOverridesHint": "Leave empty to use global discount",
       "discountPreview": "Preview",
-      "discountActive": "Discount"
+      "discountActive": "Discount",
+      "statistics": "Statistics",
+      "stats": {
+        "title": "Landing Statistics",
+        "totalPurchases": "Purchases",
+        "revenue": "Revenue",
+        "giftPurchases": "Gifts",
+        "regularPurchases": "Regular",
+        "conversionRate": "Conversion",
+        "avgPurchase": "Avg. Check",
+        "dailyChart": "Purchases & Revenue by Day",
+        "tariffChart": "Tariff Distribution",
+        "giftBreakdown": "Gifts vs Regular",
+        "purchases": "Purchases",
+        "revenueLabel": "Revenue",
+        "gifts": "Gifts",
+        "regular": "Regular",
+        "created": "Created",
+        "successful": "Successful",
+        "funnel": "Funnel",
+        "loadError": "Failed to load statistics",
+        "noPurchases": "No purchases"
+      }
     }
   },
   "adminUpdates": {

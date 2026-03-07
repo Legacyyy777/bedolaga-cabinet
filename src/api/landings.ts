@@ -275,6 +275,37 @@ export const landingApi = {
 };
 
 // ============================================================
+// Admin stats types
+// ============================================================
+
+export interface LandingDailyStat {
+  date: string;
+  purchases: number;
+  revenue_kopeks: number;
+  gifts: number;
+}
+
+export interface LandingTariffStat {
+  tariff_id: number | null;
+  tariff_name: string;
+  purchases: number;
+  revenue_kopeks: number;
+}
+
+export interface LandingStatsResponse {
+  total_purchases: number;
+  total_revenue_kopeks: number;
+  total_gifts: number;
+  total_regular: number;
+  avg_purchase_kopeks: number;
+  total_created: number;
+  total_successful: number;
+  conversion_rate: number;
+  daily_stats: LandingDailyStat[];
+  tariff_stats: LandingTariffStat[];
+}
+
+// ============================================================
 // Admin API
 // ============================================================
 
@@ -311,5 +342,10 @@ export const adminLandingsApi = {
 
   reorder: async (landingIds: number[]): Promise<void> => {
     await apiClient.put('/cabinet/admin/landings/order', { landing_ids: landingIds });
+  },
+
+  getStats: async (id: number): Promise<LandingStatsResponse> => {
+    const response = await apiClient.get(`/cabinet/admin/landings/${id}/stats`);
+    return response.data;
   },
 };

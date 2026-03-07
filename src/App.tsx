@@ -110,6 +110,7 @@ const AdminPolicyEdit = lazy(() => import('./pages/AdminPolicyEdit'));
 const AdminAuditLog = lazy(() => import('./pages/AdminAuditLog'));
 const AdminLandings = lazy(() => import('./pages/AdminLandings'));
 const AdminLandingEditor = lazy(() => import('./pages/AdminLandingEditor'));
+const AdminLandingStats = lazy(() => import('./pages/AdminLandingStats'));
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -538,6 +539,16 @@ function App() {
             <PermissionRoute permission="landings:edit">
               <LazyPage>
                 <AdminLandingEditor />
+              </LazyPage>
+            </PermissionRoute>
+          }
+        />
+        <Route
+          path="/admin/landings/:id/stats"
+          element={
+            <PermissionRoute permission="landings:read">
+              <LazyPage>
+                <AdminLandingStats />
               </LazyPage>
             </PermissionRoute>
           }

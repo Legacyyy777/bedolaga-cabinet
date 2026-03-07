@@ -79,11 +79,22 @@ const CopyIcon = () => (
   </svg>
 );
 
+const StatsChartIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+    />
+  </svg>
+);
+
 // ============ Sortable Landing Card ============
 
 interface SortableLandingCardProps {
   landing: LandingListItem;
   onEdit: () => void;
+  onStats: () => void;
   onDelete: () => void;
   onToggle: () => void;
   onCopyUrl: () => void;
@@ -93,6 +104,7 @@ interface SortableLandingCardProps {
 function SortableLandingCard({
   landing,
   onEdit,
+  onStats,
   onDelete,
   onToggle,
   onCopyUrl,
@@ -183,6 +195,13 @@ function SortableLandingCard({
                 <CopyIcon />
               </button>
               <button
+                onClick={onStats}
+                className="rounded-lg bg-dark-700 p-2 text-dark-300 transition-colors hover:bg-dark-600 hover:text-dark-100"
+                title={t('admin.landings.statistics')}
+              >
+                <StatsChartIcon />
+              </button>
+              <button
                 onClick={onToggle}
                 className={cn(
                   'rounded-lg p-2 transition-colors',
@@ -236,6 +255,13 @@ function SortableLandingCard({
               title={t('admin.landings.copyUrl')}
             >
               <CopyIcon />
+            </button>
+            <button
+              onClick={onStats}
+              className="rounded-lg bg-dark-700 p-2 text-dark-300 transition-colors hover:bg-dark-600 hover:text-dark-100"
+              title={t('admin.landings.statistics')}
+            >
+              <StatsChartIcon />
             </button>
             <button
               onClick={onToggle}
@@ -472,6 +498,7 @@ export default function AdminLandings() {
                   key={landing.id}
                   landing={landing}
                   onEdit={() => navigate(`/admin/landings/${landing.id}/edit`)}
+                  onStats={() => navigate(`/admin/landings/${landing.id}/stats`)}
                   onDelete={() => handleDelete(landing)}
                   onToggle={() => toggleMutation.mutate(landing.id)}
                   onCopyUrl={() => handleCopyUrl(landing.slug)}

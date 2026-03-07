@@ -3778,7 +3778,29 @@
       "discountOverrides": "Индивидуальные скидки по тарифам",
       "discountOverridesHint": "Оставьте пустым для использования общей скидки",
       "discountPreview": "Предпросмотр",
-      "discountActive": "Скидка"
+      "discountActive": "Скидка",
+      "statistics": "Статистика",
+      "stats": {
+        "title": "Статистика лендинга",
+        "totalPurchases": "Покупки",
+        "revenue": "Доход",
+        "giftPurchases": "Подарки",
+        "regularPurchases": "Обычные",
+        "conversionRate": "Конверсия",
+        "avgPurchase": "Средний чек",
+        "dailyChart": "Покупки и доход по дням",
+        "tariffChart": "Распределение по тарифам",
+        "giftBreakdown": "Подарки vs обычные",
+        "purchases": "Покупки",
+        "revenueLabel": "Доход",
+        "gifts": "Подарки",
+        "regular": "Обычные",
+        "created": "Создано",
+        "successful": "Успешных",
+        "funnel": "Воронка",
+        "loadError": "Не удалось загрузить статистику",
+        "noPurchases": "Нет покупок"
+      }
     }
   },
   "adminUpdates": {
