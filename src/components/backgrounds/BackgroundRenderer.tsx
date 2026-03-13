@@ -66,9 +66,7 @@ if (cachedConfig?.enabled && cachedConfig.type && cachedConfig.type !== 'none') 
 function setCachedConfig(config: AnimationConfig) {
   try {
     localStorage.setItem(ANIMATION_CACHE_KEY, JSON.stringify(config));
-  } catch {
-    // localStorage not available
-  }
+  } catch {}
 }
 
 export function setCachedAnimationConfig(config: AnimationConfig) {

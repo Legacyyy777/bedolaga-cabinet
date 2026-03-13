@@ -64,7 +64,6 @@ export function applyThemeColors(colors: ThemeColors): void {
   const warningPalette = generatePalette(colors.warning);
   const errorPalette = generatePalette(colors.error);
 
-  // === DARK THEME PALETTE ===
   // Convert hex colors to RGB
   const darkBgRgb = hexToRgb(colors.darkBackground);
   const darkSurfaceRgb = hexToRgb(colors.darkSurface);
@@ -104,7 +103,6 @@ export function applyThemeColors(colors: ThemeColors): void {
   root.style.setProperty('--color-dark-900', interpolateRgb(darkSurfaceRgb, darkBgRgb, 0.7));
   root.style.setProperty('--color-dark-950', rgbToString(darkBgRgb.r, darkBgRgb.g, darkBgRgb.b));
 
-  // === LIGHT THEME PALETTE ===
   const lightBgRgb = hexToRgb(colors.lightBackground);
   const lightSurfaceRgb = hexToRgb(colors.lightSurface);
   const lightTextRgb = hexToRgb(colors.lightText);
@@ -149,7 +147,6 @@ export function applyThemeColors(colors: ThemeColors): void {
     rgbToString(lightTextRgb.r, lightTextRgb.g, lightTextRgb.b),
   );
 
-  // === STATUS COLOR PALETTES ===
   for (const shade of SHADE_LEVELS) {
     root.style.setProperty(`--color-accent-${shade}`, accentPalette[shade]);
     root.style.setProperty(`--color-success-${shade}`, successPalette[shade]);

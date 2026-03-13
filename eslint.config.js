@@ -31,7 +31,7 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'no-empty': 'warn',
+      'no-empty': ['warn', { allowEmptyCatch: true }],
       'no-eval': 'error',
       'no-implied-eval': 'error',
       'no-new-func': 'error',

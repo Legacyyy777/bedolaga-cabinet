@@ -147,8 +147,6 @@ export const adminApi = {
   },
 };
 
-// ============ Dashboard Stats Types ============
-
 export interface NodeStatus {
   uuid: string;
   name: string;
@@ -239,8 +237,6 @@ export interface DashboardStats {
   tariff_stats?: TariffStats;
 }
 
-// ============ Extended Stats Types ============
-
 export interface TopReferrerItem {
   user_id: number;
   telegram_id: number | null;
@@ -317,8 +313,6 @@ export interface SystemInfo {
   users_total: number;
   subscriptions_active: number;
 }
-
-// ============ Dashboard Stats API ============
 
 export const statsApi = {
   // Get system info

@@ -21,10 +21,6 @@ import { getApiErrorMessage } from '../utils/api-error';
 import { formatPrice } from '../utils/format';
 import { usePlatform, useHaptic } from '@/platform';
 
-// ============================================================
-// SVG Icons
-// ============================================================
-
 function GiftIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -131,10 +127,6 @@ function InboxIcon({ className }: { className?: string }) {
   );
 }
 
-// ============================================================
-// Helpers
-// ============================================================
-
 function formatPeriodLabel(
   days: number,
   t: (key: string, options?: Record<string, unknown>) => string,
@@ -181,15 +173,7 @@ function formatGiftDate(dateStr: string | null): string {
   });
 }
 
-// ============================================================
-// Tab type
-// ============================================================
-
 type TabId = 'buy' | 'activate' | 'myGifts';
-
-// ============================================================
-// Sub-components: Shared
-// ============================================================
 
 function LoadingSkeleton() {
   return (
@@ -262,10 +246,6 @@ function DisabledState() {
     </div>
   );
 }
-
-// ============================================================
-// Sub-components: Buy Tab
-// ============================================================
 
 function TariffCard({
   tariff,
@@ -904,10 +884,6 @@ function BuyTabContent({
   );
 }
 
-// ============================================================
-// Sub-components: Activate Tab
-// ============================================================
-
 function ActivateTabContent({ initialCode }: { initialCode?: string | null }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -1022,10 +998,6 @@ function ActivateTabContent({ initialCode }: { initialCode?: string | null }) {
     </div>
   );
 }
-
-// ============================================================
-// Sub-components: My Gifts Tab
-// ============================================================
 
 function CopiedToast({ onDismiss }: { onDismiss: () => void }) {
   const { t } = useTranslation();
@@ -1320,19 +1292,11 @@ function MyGiftsTabContent() {
   );
 }
 
-// ============================================================
-// Tab animation variants
-// ============================================================
-
 const tabContentVariants = {
   initial: { opacity: 0, x: 20 },
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: -20 },
 };
-
-// ============================================================
-// Main Component
-// ============================================================
 
 export default function GiftSubscription() {
   const { t } = useTranslation();

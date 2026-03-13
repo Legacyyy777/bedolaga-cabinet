@@ -425,7 +425,6 @@ export default function Wheel() {
       // Use the pending result from polling, or show a fallback
       if (pendingStarsResultRef.current) {
         setSpinResult(pendingStarsResultRef.current);
-        // Haptic feedback based on result
         if (pendingStarsResultRef.current.prize_type === 'nothing') {
           haptic.notification('warning');
         } else {

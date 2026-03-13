@@ -29,8 +29,6 @@ import { ColorPicker } from '@/components/ColorPicker';
 import { usePlatform } from '../platform/hooks/usePlatform';
 import { toNumber } from '../utils/inputHelpers';
 
-// Icons
-
 const BackIcon = () => (
   <svg
     className="h-5 w-5 text-dark-400"
@@ -180,8 +178,6 @@ const PRIZE_TYPE_KEYS = [
 ];
 
 type Tab = 'settings' | 'prizes' | 'statistics';
-
-// ============ Sortable Prize Card ============
 
 interface SortablePrizeCardProps {
   prize: WheelPrizeAdmin;

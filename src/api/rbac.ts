@@ -1,7 +1,5 @@
 import apiClient from './client';
 
-// === Types ===
-
 export interface AdminRole {
   id: number;
   name: string;
@@ -143,8 +141,6 @@ export interface PermissionSection {
   section: string;
   actions: string[];
 }
-
-// === API ===
 
 const BASE = '/cabinet/admin/rbac';
 

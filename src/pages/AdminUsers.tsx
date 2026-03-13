@@ -5,8 +5,6 @@ import { useCurrency } from '../hooks/useCurrency';
 import { adminUsersApi, type UserListItem, type UsersStatsResponse } from '../api/adminUsers';
 import { usePlatform } from '../platform/hooks/usePlatform';
 
-// ============ Icons ============
-
 const BackIcon = () => (
   <svg
     className="h-5 w-5 text-dark-400"
@@ -57,8 +55,6 @@ const TelegramIcon = () => (
   </svg>
 );
 
-// ============ Components ============
-
 interface StatCardProps {
   title: string;
   value: string | number;
@@ -100,8 +96,6 @@ function StatusBadge({ status }: { status: string }) {
     </span>
   );
 }
-
-// ============ User List Component ============
 
 interface UserRowProps {
   user: UserListItem;
@@ -180,8 +174,6 @@ function UserRow({ user, onClick, formatAmount }: UserRowProps) {
     </div>
   );
 }
-
-// ============ Main Page ============
 
 export default function AdminUsers() {
   const { t } = useTranslation();

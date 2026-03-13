@@ -30,8 +30,6 @@ import {
 import { Toggle } from './Toggle';
 import { useNotify } from '../../platform/hooks/useNotify';
 
-// ============ Icons ============
-
 const GripIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path
@@ -110,8 +108,6 @@ const ArrowDownIcon = () => (
   </svg>
 );
 
-// ============ Helpers ============
-
 function generateId(): string {
   return `custom_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
 }
@@ -125,8 +121,6 @@ function configsEqual(a: MenuConfig, b: MenuConfig): boolean {
 }
 
 const DEFAULT_CONFIG: MenuConfig = { rows: [] };
-
-// ============ MaxPerRowSelector ============
 
 interface MaxPerRowSelectorProps {
   value: number;
@@ -152,8 +146,6 @@ function MaxPerRowSelector({ value, onChange }: MaxPerRowSelectorProps) {
     </div>
   );
 }
-
-// ============ ButtonChip ============
 
 interface ButtonChipProps {
   button: MenuButtonConfig;
@@ -358,8 +350,6 @@ function ButtonChip({
   );
 }
 
-// ============ SortableRow ============
-
 interface SortableRowProps {
   row: MenuRowConfig;
   rowIndex: number;
@@ -471,8 +461,6 @@ function SortableRow({
   );
 }
 
-// ============ InlineAddPanel ============
-
 interface InlineAddPanelProps {
   rowId: string;
   usedBuiltinIds: Set<string>;
@@ -539,8 +527,6 @@ function InlineAddPanel({ rowId, usedBuiltinIds, onAddBuiltin, onAddCustom }: In
     </div>
   );
 }
-
-// ============ MenuEditorTab ============
 
 export function MenuEditorTab() {
   const { t } = useTranslation();

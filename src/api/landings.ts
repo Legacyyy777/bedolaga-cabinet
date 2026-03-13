@@ -1,10 +1,6 @@
 import apiClient from './client';
 import type { AnimationConfig } from '@/components/ui/backgrounds/types';
 
-// ============================================================
-// Public types
-// ============================================================
-
 export interface LandingFeature {
   icon: string;
   title: string;
@@ -130,10 +126,6 @@ export interface PurchaseStatus {
   bot_link: string | null;
 }
 
-// ============================================================
-// Locale helpers
-// ============================================================
-
 /** Locale dict for multi-language text fields (admin API) */
 export type LocaleDict = Record<string, string>;
 
@@ -147,10 +139,6 @@ export const LOCALE_META: Record<SupportedLocale, { flag: string; name: string; 
   zh: { flag: '\u{1F1E8}\u{1F1F3}', name: 'ZH', rtl: false },
   fa: { flag: '\u{1F1EE}\u{1F1F7}', name: 'FA', rtl: true },
 };
-
-// ============================================================
-// Admin types
-// ============================================================
 
 /** Admin feature type with localized title/description */
 export interface AdminLandingFeature {
@@ -232,12 +220,7 @@ export interface LandingCreateRequest {
 
 export type LandingUpdateRequest = Partial<LandingCreateRequest>;
 
-/**
- * Normalize a value that might be a plain string (old API) or a LocaleDict.
- * If it's a string, wraps it as `{ ru: value }`.
- * If null/undefined, returns the fallback.
- */
-/** Extract best display string from a LocaleDict: ru → en → first available → '' */
+/** Extract best display string from a LocaleDict: ru -> en -> first available -> '' */
 export function resolveLocaleDisplay(dict: LocaleDict | string | null | undefined): string {
   if (!dict) return '';
   if (typeof dict === 'string') return dict;
@@ -252,10 +235,6 @@ export function toLocaleDict(
   if (typeof value === 'string') return value ? { ru: value } : fallback;
   return value;
 }
-
-// ============================================================
-// Public API
-// ============================================================
 
 export const landingApi = {
   getConfig: async (slug: string, lang?: string): Promise<LandingConfig> => {
@@ -279,10 +258,6 @@ export const landingApi = {
     return response.data;
   },
 };
-
-// ============================================================
-// Admin stats types
-// ============================================================
 
 export interface LandingDailyStat {
   date: string;
@@ -310,10 +285,6 @@ export interface LandingStatsResponse {
   daily_stats: LandingDailyStat[];
   tariff_stats: LandingTariffStat[];
 }
-
-// ============================================================
-// Admin purchase list types
-// ============================================================
 
 export type PurchaseItemStatus =
   | 'pending'
@@ -345,10 +316,6 @@ export interface LandingPurchaseListResponse {
   items: LandingPurchaseItem[];
   total: number;
 }
-
-// ============================================================
-// Admin API
-// ============================================================
 
 export const adminLandingsApi = {
   list: async (): Promise<LandingListItem[]> => {

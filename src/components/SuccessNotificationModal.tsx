@@ -108,7 +108,6 @@ export default function SuccessNotificationModal() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
 
-  // Haptic feedback on open
   useEffect(() => {
     if (isOpen) {
       haptic.notification('success');

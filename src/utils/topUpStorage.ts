@@ -16,9 +16,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 export function saveTopUpPendingInfo(info: TopUpPendingInfo) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(info));
-  } catch {
-    // sessionStorage unavailable (private mode, quota, etc.)
-  }
+  } catch {}
 }
 
 export function loadTopUpPendingInfo(): TopUpPendingInfo | null {
@@ -57,7 +55,5 @@ export function loadTopUpPendingInfo(): TopUpPendingInfo | null {
 export function clearTopUpPendingInfo() {
   try {
     sessionStorage.removeItem(STORAGE_KEY);
-  } catch {
-    // ignore
-  }
+  } catch {}
 }

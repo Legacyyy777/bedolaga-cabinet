@@ -1,7 +1,5 @@
 import apiClient from './client';
 
-// ==================== TYPES ====================
-
 export interface WheelPrize {
   id: number;
   display_name: string;
@@ -79,7 +77,6 @@ export interface StarsInvoiceResponse {
   stars_amount: number;
 }
 
-// Admin types
 export interface WheelPrizeAdmin {
   id: number;
   config_id: number;
@@ -99,7 +96,6 @@ export interface WheelPrizeAdmin {
   updated_at: string | null;
 }
 
-// Type for creating a new prize (excludes id, config_id which are auto-generated)
 export interface CreateWheelPrizeData {
   prize_type: string;
   prize_value: number;
@@ -180,22 +176,17 @@ export interface AdminSpinsResponse {
   pages: number;
 }
 
-// ==================== USER API ====================
-
 export const wheelApi = {
-  // Get wheel config
   getConfig: async (): Promise<WheelConfig> => {
     const response = await apiClient.get<WheelConfig>('/cabinet/wheel/config');
     return response.data;
   },
 
-  // Check spin availability
   checkAvailability: async (): Promise<SpinAvailability> => {
     const response = await apiClient.get<SpinAvailability>('/cabinet/wheel/availability');
     return response.data;
   },
 
-  // Spin the wheel
   spin: async (paymentType: 'telegram_stars' | 'subscription_days'): Promise<SpinResult> => {
     const response = await apiClient.post<SpinResult>('/cabinet/wheel/spin', {
       payment_type: paymentType,
@@ -203,7 +194,6 @@ export const wheelApi = {
     return response.data;
   },
 
-  // Get spin history
   getHistory: async (page = 1, perPage = 20): Promise<SpinHistoryResponse> => {
     const response = await apiClient.get<SpinHistoryResponse>('/cabinet/wheel/history', {
       params: { page, per_page: perPage },
@@ -211,41 +201,33 @@ export const wheelApi = {
     return response.data;
   },
 
-  // Create Stars invoice for Mini App payment
   createStarsInvoice: async (): Promise<StarsInvoiceResponse> => {
     const response = await apiClient.post<StarsInvoiceResponse>('/cabinet/wheel/stars-invoice');
     return response.data;
   },
 };
 
-// ==================== ADMIN API ====================
-
 export const adminWheelApi = {
-  // Get full config
   getConfig: async (): Promise<AdminWheelConfig> => {
     const response = await apiClient.get<AdminWheelConfig>('/cabinet/admin/wheel/config');
     return response.data;
   },
 
-  // Update config
   updateConfig: async (data: Partial<AdminWheelConfig>): Promise<AdminWheelConfig> => {
     const response = await apiClient.put<AdminWheelConfig>('/cabinet/admin/wheel/config', data);
     return response.data;
   },
 
-  // Get prizes
   getPrizes: async (): Promise<WheelPrizeAdmin[]> => {
     const response = await apiClient.get<WheelPrizeAdmin[]>('/cabinet/admin/wheel/prizes');
     return response.data;
   },
 
-  // Create prize
   createPrize: async (data: CreateWheelPrizeData): Promise<WheelPrizeAdmin> => {
     const response = await apiClient.post<WheelPrizeAdmin>('/cabinet/admin/wheel/prizes', data);
     return response.data;
   },
 
-  // Update prize
   updatePrize: async (
     prizeId: number,
     data: Partial<WheelPrizeAdmin>,
@@ -257,17 +239,14 @@ export const adminWheelApi = {
     return response.data;
   },
 
-  // Delete prize
   deletePrize: async (prizeId: number): Promise<void> => {
     await apiClient.delete(`/cabinet/admin/wheel/prizes/${prizeId}`);
   },
 
-  // Reorder prizes
   reorderPrizes: async (prizeIds: number[]): Promise<void> => {
     await apiClient.post('/cabinet/admin/wheel/prizes/reorder', { prize_ids: prizeIds });
   },
 
-  // Get statistics
   getStatistics: async (dateFrom?: string, dateTo?: string): Promise<WheelStatistics> => {
     const response = await apiClient.get<WheelStatistics>('/cabinet/admin/wheel/statistics', {
       params: { date_from: dateFrom, date_to: dateTo },
@@ -275,7 +254,6 @@ export const adminWheelApi = {
     return response.data;
   },
 
-  // Get all spins
   getSpins: async (params?: {
     user_id?: number;
     date_from?: string;

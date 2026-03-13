@@ -80,8 +80,6 @@ const XCircleIcon = () => (
   </svg>
 );
 
-// ------- Main Component -------
-
 interface PromoOffersSectionProps {
   className?: string;
 }

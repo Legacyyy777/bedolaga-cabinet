@@ -6,8 +6,6 @@ import { rbacApi, AccessPolicy, AdminRole } from '@/api/rbac';
 import { PermissionGate } from '@/components/auth/PermissionGate';
 import { usePlatform } from '@/platform/hooks/usePlatform';
 
-// === Icons ===
-
 const BackIcon = () => (
   <svg
     className="h-5 w-5 text-dark-400"
@@ -96,8 +94,6 @@ const CalendarIcon = () => (
   </svg>
 );
 
-// === Helpers ===
-
 interface PolicyConditions {
   time_range?: { start: string; end: string };
   ip_whitelist?: string[];
@@ -130,8 +126,6 @@ function parseConditions(raw: Record<string, unknown>): PolicyConditions {
   return result;
 }
 
-// === Sub-components ===
-
 interface EffectBadgeProps {
   effect: 'allow' | 'deny';
   className?: string;
@@ -153,8 +147,6 @@ function EffectBadge({ effect, className }: EffectBadgeProps) {
     </span>
   );
 }
-
-// === Main Page ===
 
 export default function AdminPolicies() {
   const { t } = useTranslation();

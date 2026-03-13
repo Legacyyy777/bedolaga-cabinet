@@ -15,10 +15,6 @@ import { cn } from '../lib/utils';
 
 const MAX_POLL_MS = 10 * 60 * 1000; // 10 minutes
 
-// ============================================================
-// Sub-components
-// ============================================================
-
 function PendingState() {
   const { t } = useTranslation();
 
@@ -599,10 +595,6 @@ function PollTimedOutState({ onRetry }: { onRetry: () => void }) {
     </motion.div>
   );
 }
-
-// ============================================================
-// Main Component
-// ============================================================
 
 export default function PurchaseSuccess() {
   const { t } = useTranslation();

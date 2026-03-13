@@ -62,8 +62,6 @@ export default function InstallationGuide({
   const [activePlatformKey, setActivePlatformKey] = useState<string | null>(null);
   const [selectedApp, setSelectedApp] = useState<RemnawaveAppClient | null>(null);
 
-  // --- Helpers ---
-
   const getLocalizedText = useCallback(
     (text: LocalizedText | undefined): string => {
       if (!text) return '';
@@ -96,8 +94,6 @@ export default function InstallationGuide({
     [appConfig.svgLibrary],
   );
 
-  // --- Available platforms ---
-
   const availablePlatforms = useMemo(() => {
     if (!appConfig.platforms) return [];
     const available = platformOrder.filter((key) => {
@@ -110,8 +106,6 @@ export default function InstallationGuide({
     return available;
   }, [appConfig.platforms, detectedPlatform]);
 
-  // --- Auto-select platform & app ---
-
   useEffect(() => {
     if (selectedApp || !availablePlatforms.length) return;
     const platform = availablePlatforms[0];
@@ -123,8 +117,6 @@ export default function InstallationGuide({
       setActivePlatformKey(platform);
     }
   }, [appConfig.platforms, availablePlatforms, selectedApp]);
-
-  // --- Button renderer (delegates to BlockButtons component) ---
 
   const renderBlockButtons = useCallback(
     (buttons: RemnawaveButtonClient[] | undefined, variant: 'light' | 'subtle') => (
@@ -152,8 +144,6 @@ export default function InstallationGuide({
       onOpenDeepLink,
     ],
   );
-
-  // --- Current platform data ---
 
   const currentPlatformKey = activePlatformKey || availablePlatforms[0];
   const currentPlatformData = currentPlatformKey

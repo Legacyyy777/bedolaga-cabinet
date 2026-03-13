@@ -38,40 +38,29 @@ if (!alreadyInitialized) {
     init();
     restoreInitData();
 
-    // Сбрасываем старые токены если init data изменился (новая сессия Telegram)
     clearStaleSessionIfNeeded(retrieveRawInitData() || null);
 
-    // Mount components — each in its own try/catch so one failure doesn't block others
-    // Note: mountMiniApp() internally mounts themeParams in SDK v3,
-    // so we don't call mountThemeParams() separately to avoid ConcurrentCallError
+    // Each mount in its own try/catch so one failure doesn't block others.
+    // mountMiniApp() internally mounts themeParams in SDK v3,
+    // so we don't call mountThemeParams() separately to avoid ConcurrentCallError.
     try {
       mountMiniApp();
-    } catch {
-      /* already mounted */
-    }
+    } catch {}
     try {
       bindThemeParamsCssVars();
-    } catch {
-      /* theme params not yet available */
-    }
+    } catch {}
     try {
       mountSwipeBehavior();
       disableVerticalSwipes();
-    } catch {
-      /* already mounted */
-    }
+    } catch {}
     try {
       mountClosingBehavior();
       disableClosingConfirmation();
-    } catch {
-      /* already mounted */
-    }
+    } catch {}
     try {
       mountBackButton();
-    } catch {
-      /* already mounted */
-    }
-    // Viewport — async, fullscreen зависит от смонтированного viewport
+    } catch {}
+    // Viewport must be mounted before requesting fullscreen
     mountViewport()
       .then(() => {
         bindViewportCssVars();
@@ -87,12 +76,9 @@ if (!alreadyInitialized) {
       .catch(() => {});
 
     miniAppReady();
-  } catch {
-    // Not in Telegram — ok
-  }
+  } catch {}
 }
 
-// Preload logo from cache — defer to idle time so it doesn't compete with LCP
 if ('requestIdleCallback' in window) {
   requestIdleCallback(() => initLogoPreload());
 } else {

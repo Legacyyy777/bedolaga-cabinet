@@ -17,6 +17,7 @@ import {
 } from '../api/branding';
 import { getAndClearReturnUrl } from '../utils/token';
 import { isInTelegramWebApp, getTelegramInitData, useTelegramSDK } from '../hooks/useTelegramSDK';
+import { closeMiniApp } from '@telegram-apps/sdk-react';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import TelegramLoginButton from '../components/TelegramLoginButton';
 import OAuthProviderIcon from '../components/OAuthProviderIcon';
@@ -213,30 +214,13 @@ export default function Login() {
     tryTelegramAuth();
   }, [isAuthInitializing, loginWithTelegram, navigate, t, getReturnUrl]);
 
-  // Manual retry for Telegram Mini App auth
-  const handleRetryTelegramAuth = async () => {
-    const initData = getTelegramInitData();
-    if (!initData) {
-      setError(t('auth.telegramRequired'));
-      return;
-    }
-
-    setError('');
-    setIsLoading(true);
+  const handleRetryTelegramAuth = () => {
     try {
-      await loginWithTelegram(initData);
-      navigate(getReturnUrl(), { replace: true });
-    } catch (err) {
-      const error = err as { response?: { status?: number; data?: { detail?: string } } };
-      const status = error.response?.status;
-      const detail = error.response?.data?.detail;
-      if (import.meta.env.DEV) console.warn('Telegram auth retry failed:', status, detail);
-      setError(
-        detail ||
-          t('auth.telegramRetryFailed', 'Authorization failed. Close the app and try again.'),
-      );
-    } finally {
-      setIsLoading(false);
+      sessionStorage.removeItem('tapps/launchParams');
+      sessionStorage.removeItem('telegram_init_data');
+      closeMiniApp();
+    } catch {
+      window.location.reload();
     }
   };
 

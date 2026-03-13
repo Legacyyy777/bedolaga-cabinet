@@ -23,8 +23,6 @@ import {
   RemnawaveIcon,
 } from '../components/icons';
 
-// ============ Icons ============
-
 const BackIcon = () => (
   <svg
     className="h-5 w-5 text-dark-400"
@@ -36,8 +34,6 @@ const BackIcon = () => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
   </svg>
 );
-
-// ============ Helpers ============
 
 const formatBytes = (bytes: number): string => {
   if (bytes === 0) return '0 B';
@@ -99,8 +95,6 @@ const getCountryFlag = (code: string | null | undefined): string => {
   };
   return codeMap[code.toUpperCase()] || code;
 };
-
-// ============ Sub-Components ============
 
 interface StatCardProps {
   label: string;
@@ -332,8 +326,6 @@ function SyncCard({ title, description, onAction, isLoading, lastResult }: SyncC
     </div>
   );
 }
-
-// ============ Tab Components ============
 
 interface OverviewTabProps {
   stats: SystemStatsResponse | undefined;
@@ -872,8 +864,6 @@ function SyncTab({
     </div>
   );
 }
-
-// ============ Main Component ============
 
 type TabType = 'overview' | 'nodes' | 'squads' | 'sync';
 

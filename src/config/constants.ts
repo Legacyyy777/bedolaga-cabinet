@@ -1,4 +1,3 @@
-// Storage keys
 export const STORAGE_KEYS = {
   THEME: 'cabinet-theme',
   ENABLED_THEMES: 'cabinet-enabled-themes',

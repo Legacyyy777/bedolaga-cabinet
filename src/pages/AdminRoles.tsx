@@ -7,8 +7,6 @@ import { PermissionGate } from '@/components/auth/PermissionGate';
 import { usePermissionStore } from '@/store/permissions';
 import { usePlatform } from '@/platform/hooks/usePlatform';
 
-// === Icons ===
-
 const BackIcon = () => (
   <svg
     className="h-5 w-5 text-dark-400"
@@ -56,8 +54,6 @@ const ShieldIcon = () => (
     />
   </svg>
 );
-
-// === Main Page ===
 
 export default function AdminRoles() {
   const { t } = useTranslation();

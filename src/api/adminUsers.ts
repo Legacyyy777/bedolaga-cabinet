@@ -1,7 +1,5 @@
 import apiClient from './client';
 
-// ============ Types ============
-
 export interface TrafficPurchaseInfo {
   id: number;
   traffic_gb: number;
@@ -380,8 +378,6 @@ export interface AdminUserGiftsResponse {
   sent_total: number;
   received_total: number;
 }
-
-// ============ API ============
 
 export const adminUsersApi = {
   // List users

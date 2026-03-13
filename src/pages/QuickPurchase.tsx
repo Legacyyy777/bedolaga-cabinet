@@ -48,10 +48,6 @@ function formatPeriodLabel(
   return t('landing.periodLabels.nDays', { count: days });
 }
 
-// ============================================================
-// Sub-components
-// ============================================================
-
 function LoadingSkeleton() {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-dark-950">
@@ -611,10 +607,6 @@ function SummaryCard({
   );
 }
 
-// ============================================================
-// Discount Countdown
-// ============================================================
-
 function TimeUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
@@ -714,10 +706,6 @@ function DiscountBanner({
     </motion.div>
   );
 }
-
-// ============================================================
-// Main Component
-// ============================================================
 
 export default function QuickPurchase() {
   const { slug } = useParams<{ slug: string }>();

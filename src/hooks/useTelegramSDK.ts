@@ -18,9 +18,6 @@ import {
 
 const FULLSCREEN_CACHE_KEY = 'cabinet_fullscreen_enabled';
 
-/**
- * Get cached fullscreen setting
- */
 export const getCachedFullscreenEnabled = (): boolean => {
   try {
     return localStorage.getItem(FULLSCREEN_CACHE_KEY) === 'true';
@@ -29,18 +26,12 @@ export const getCachedFullscreenEnabled = (): boolean => {
   }
 };
 
-/**
- * Set cached fullscreen setting
- */
 export const setCachedFullscreenEnabled = (enabled: boolean) => {
   try {
     localStorage.setItem(FULLSCREEN_CACHE_KEY, String(enabled));
-  } catch {
-    // localStorage not available
-  }
+  } catch {}
 };
 
-// Cached detection result (evaluated once at module load)
 let _isInTelegram: boolean | null = null;
 function detectTelegram(): boolean {
   if (_isInTelegram === null) {
@@ -54,16 +45,10 @@ function detectTelegram(): boolean {
   return _isInTelegram;
 }
 
-/**
- * Check if we're actually running inside Telegram Mini App
- */
 export function isInTelegramWebApp(): boolean {
   return detectTelegram();
 }
 
-/**
- * Check if running on mobile Telegram client (iOS/Android)
- */
 export function isTelegramMobile(): boolean {
   try {
     const { tgWebAppPlatform } = retrieveLaunchParams();
@@ -73,9 +58,6 @@ export function isTelegramMobile(): boolean {
   }
 }
 
-/**
- * Get Telegram init data for authentication
- */
 export function getTelegramInitData(): string | null {
   try {
     return retrieveRawInitData() || null;
@@ -84,9 +66,6 @@ export function getTelegramInitData(): string | null {
   }
 }
 
-/**
- * Type for platform values
- */
 export type TelegramPlatform =
   | 'android'
   | 'ios'
@@ -98,13 +77,8 @@ export type TelegramPlatform =
   | 'unknown'
   | undefined;
 
-// Default values
 const defaultInsets = { top: 0, bottom: 0, left: 0, right: 0 };
 
-/**
- * Hook for Telegram WebApp integration
- * Uses @telegram-apps/sdk-react v3 signals
- */
 export function useTelegramSDK() {
   const inTelegram = detectTelegram();
 
@@ -156,18 +130,14 @@ export function useTelegramSDK() {
     if (!inTelegram) return;
     try {
       sdkRequestFullscreen();
-    } catch {
-      // Not supported
-    }
+    } catch {}
   }, [inTelegram]);
 
   const exitFullscreen = useCallback(() => {
     if (!inTelegram) return;
     try {
       sdkExitFullscreen();
-    } catch {
-      // Not supported
-    }
+    } catch {}
   }, [inTelegram]);
 
   const toggleFullscreen = useCallback(() => {
@@ -182,27 +152,21 @@ export function useTelegramSDK() {
     if (!inTelegram) return;
     try {
       expandViewport();
-    } catch {
-      // Not supported
-    }
+    } catch {}
   }, [inTelegram]);
 
   const disableVerticalSwipes = useCallback(() => {
     if (!inTelegram) return;
     try {
       sdkDisableVerticalSwipes();
-    } catch {
-      // Not supported
-    }
+    } catch {}
   }, [inTelegram]);
 
   const enableVerticalSwipes = useCallback(() => {
     if (!inTelegram) return;
     try {
       sdkEnableVerticalSwipes();
-    } catch {
-      // Not supported
-    }
+    } catch {}
   }, [inTelegram]);
 
   const isFullscreenSupported = inTelegram;

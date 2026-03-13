@@ -88,9 +88,7 @@ export const getCachedBranding = (): BrandingInfo | null => {
 export const setCachedBranding = (branding: BrandingInfo) => {
   try {
     sessionStorage.setItem(BRANDING_CACHE_KEY, JSON.stringify(branding));
-  } catch {
-    // sessionStorage not available
-  }
+  } catch {}
 };
 
 // Preload logo image as blob to hide backend URL

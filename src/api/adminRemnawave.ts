@@ -1,7 +1,5 @@
 import { apiClient } from './client';
 
-// ============ Types ============
-
 // Status & Connection
 export interface ConnectionStatus {
   status: string;
@@ -223,8 +221,6 @@ export interface SyncResponse {
   message?: string;
   data?: Record<string, unknown>;
 }
-
-// ============ API ============
 
 export const adminRemnawaveApi = {
   // Status & Connection

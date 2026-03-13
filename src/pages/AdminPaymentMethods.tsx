@@ -23,8 +23,6 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { adminPaymentMethodsApi } from '../api/adminPaymentMethods';
 import type { PaymentMethodConfig } from '../types';
-// ============ Icons ============
-
 const BackIcon = () => (
   <svg
     className="h-5 w-5 text-dark-400"
@@ -62,8 +60,6 @@ const SaveIcon = () => (
     />
   </svg>
 );
-
-// ============ Sortable Card ============
 
 interface SortableCardProps {
   config: PaymentMethodConfig;
@@ -183,10 +179,6 @@ function SortablePaymentCard({ config, onClick }: SortableCardProps) {
     </div>
   );
 }
-
-// ============ Toast ============
-
-// ============ Main Page ============
 
 export default function AdminPaymentMethods() {
   const { t } = useTranslation();

@@ -53,8 +53,6 @@ interface AuthState {
   ) => Promise<RegisterResponse>;
 }
 
-// Блокировка для предотвращения race condition при инициализации
-// Используем объект для атомарности операций
 const initState = {
   promise: null as Promise<void> | null,
   isInitializing: false,
@@ -92,12 +90,9 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
-        // Get refresh token from secure storage, not zustand state
         const refreshToken = tokenStorage.getRefreshToken();
         if (refreshToken) {
-          authApi.logout(refreshToken).catch(() => {
-            // Logout API call failed - ignore silently
-          });
+          authApi.logout(refreshToken).catch(() => {});
         }
         tokenStorage.clearTokens();
         usePermissionStore.getState().reset();
@@ -118,7 +113,6 @@ export const useAuthStore = create<AuthState>()(
             usePermissionStore.getState().reset();
             return;
           }
-          // Используем apiClient для единообразной обработки ошибок
           const response = await apiClient.get<{ is_admin: boolean }>('/cabinet/auth/me/is-admin');
           set({ isAdmin: response.data.is_admin });
           if (response.data.is_admin) {
@@ -136,18 +130,14 @@ export const useAuthStore = create<AuthState>()(
         try {
           const user = await authApi.getMe();
           set({ user });
-        } catch {
-          // Failed to refresh user - ignore silently
-        }
+        } catch {}
       },
 
       initialize: async () => {
-        // Защита от race condition - если уже инициализировано, выходим
         if (initState.isInitialized) {
           return;
         }
 
-        // Если уже идёт инициализация, ждём её завершения
         if (initState.isInitializing && initState.promise) {
           return initState.promise;
         }
@@ -157,7 +147,6 @@ export const useAuthStore = create<AuthState>()(
           try {
             set({ isLoading: true });
 
-            // Миграция токенов из localStorage (для обратной совместимости)
             tokenStorage.migrateFromLocalStorage();
 
             const accessToken = tokenStorage.getAccessToken();
@@ -168,15 +157,10 @@ export const useAuthStore = create<AuthState>()(
               return;
             }
 
-            // No access token or it's expired — try refresh
-            // This handles Mini App reopens where sessionStorage was cleared
-            // but refresh token persists in localStorage
             if (!isTokenValid(accessToken)) {
-              // Используем централизованный менеджер для refresh
               const newToken = await tokenRefreshManager.refreshAccessToken();
               if (newToken) {
                 const user = await authApi.getMe();
-                // Сначала проверяем admin статус, потом снимаем isLoading
                 await get().checkAdminStatus();
                 set({
                   accessToken: newToken,
@@ -200,7 +184,6 @@ export const useAuthStore = create<AuthState>()(
 
             try {
               const user = await authApi.getMe();
-              // Сначала проверяем admin статус, потом снимаем isLoading
               await get().checkAdminStatus();
               set({
                 accessToken,
@@ -210,12 +193,10 @@ export const useAuthStore = create<AuthState>()(
                 isLoading: false,
               });
             } catch {
-              // Token might be invalid on server, try to refresh
               const newToken = await tokenRefreshManager.refreshAccessToken();
               if (newToken) {
                 try {
                   const user = await authApi.getMe();
-                  // Сначала проверяем admin статус, потом снимаем isLoading
                   await get().checkAdminStatus();
                   set({
                     accessToken: newToken,
@@ -235,7 +216,6 @@ export const useAuthStore = create<AuthState>()(
                   });
                 }
               } else {
-                // Refresh failed, logout
                 tokenStorage.clearTokens();
                 set({
                   accessToken: null,
@@ -339,9 +319,6 @@ export const useAuthStore = create<AuthState>()(
       },
 
       registerWithEmail: async (email, password, firstName, referralCode) => {
-        // Registration now returns message, not tokens
-        // User must verify email before they can login
-        // Campaign slug stays in localStorage — consumed during verify_email step
         const code = referralCode || consumeReferralCode() || undefined;
         const response = await authApi.registerEmailStandalone({
           email,
@@ -355,8 +332,6 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'cabinet-auth',
-      // Only persist user info for UI caching
-      // Tokens are stored securely in sessionStorage via tokenStorage
       partialize: (state) => ({
         user: state.user,
       }),
@@ -364,9 +339,7 @@ export const useAuthStore = create<AuthState>()(
   ),
 );
 
-// Capture campaign slug and referral code from URL before auth initialization
 captureCampaignFromUrl();
 captureReferralFromUrl();
 
-// Initialize auth on app load
 useAuthStore.getState().initialize();

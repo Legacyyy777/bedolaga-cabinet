@@ -12,7 +12,6 @@ import type {
   HapticNotificationType,
 } from '@/platform/types';
 
-// Storage key for local storage fallback
 const STORAGE_PREFIX = 'bedolaga_';
 
 function createCapabilities(): PlatformCapabilities {
@@ -154,7 +153,6 @@ function createCloudStorageController(): CloudStorageController {
       try {
         localStorage.setItem(STORAGE_PREFIX + key, value);
       } catch {
-        // Storage might be full or disabled
         console.warn('Failed to save to localStorage:', key);
       }
     },

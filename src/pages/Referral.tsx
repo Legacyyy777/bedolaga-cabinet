@@ -239,9 +239,7 @@ export default function Referral() {
           text: shareText,
           url: referralLink,
         })
-        .catch(() => {
-          // ignore cancellation errors
-        });
+        .catch(() => {});
       return;
     }
 

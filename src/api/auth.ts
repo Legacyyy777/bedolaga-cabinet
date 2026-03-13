@@ -13,7 +13,6 @@ import type {
 } from '../types';
 
 export const authApi = {
-  // Telegram WebApp authentication
   loginTelegram: async (
     initData: string,
     campaignSlug?: string | null,
@@ -27,7 +26,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Telegram Login Widget authentication
   loginTelegramWidget: async (
     data: {
       id: number;
@@ -49,7 +47,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Telegram OIDC authentication (popup flow with id_token)
   loginTelegramOIDC: async (
     idToken: string,
     campaignSlug?: string | null,
@@ -63,7 +60,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Email login
   loginEmail: async (
     email: string,
     password: string,
@@ -79,7 +75,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Register email (link to existing Telegram account)
   registerEmail: async (
     email: string,
     password: string,
@@ -91,8 +86,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Register standalone email account (no Telegram required)
-  // Returns message - user must verify email before login
   registerEmailStandalone: async (data: {
     email: string;
     password: string;
@@ -107,7 +100,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Verify email and get auth tokens
   verifyEmail: async (token: string, campaignSlug?: string | null): Promise<AuthResponse> => {
     const response = await apiClient.post<AuthResponse>('/cabinet/auth/email/verify', {
       token,
@@ -116,13 +108,11 @@ export const authApi = {
     return response.data;
   },
 
-  // Resend verification email
   resendVerification: async (): Promise<{ message: string }> => {
     const response = await apiClient.post('/cabinet/auth/email/resend');
     return response.data;
   },
 
-  // Refresh token
   refreshToken: async (refreshToken: string): Promise<TokenResponse> => {
     const response = await apiClient.post<TokenResponse>('/cabinet/auth/refresh', {
       refresh_token: refreshToken,
@@ -130,20 +120,17 @@ export const authApi = {
     return response.data;
   },
 
-  // Logout
   logout: async (refreshToken: string): Promise<void> => {
     await apiClient.post('/cabinet/auth/logout', {
       refresh_token: refreshToken,
     });
   },
 
-  // Forgot password
   forgotPassword: async (email: string): Promise<{ message: string }> => {
     const response = await apiClient.post('/cabinet/auth/password/forgot', { email });
     return response.data;
   },
 
-  // Reset password
   resetPassword: async (token: string, password: string): Promise<{ message: string }> => {
     const response = await apiClient.post('/cabinet/auth/password/reset', {
       token,
@@ -152,13 +139,11 @@ export const authApi = {
     return response.data;
   },
 
-  // Get current user
   getMe: async (): Promise<User> => {
     const response = await apiClient.get<User>('/cabinet/auth/me');
     return response.data;
   },
 
-  // Request email change - sends verification code to new email
   requestEmailChange: async (
     newEmail: string,
   ): Promise<{ message: string; new_email: string; expires_in_minutes: number }> => {
@@ -168,7 +153,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Verify email change with code
   verifyEmailChange: async (code: string): Promise<{ message: string; email: string }> => {
     const response = await apiClient.post('/cabinet/auth/email/change/verify', {
       code,
@@ -176,7 +160,6 @@ export const authApi = {
     return response.data;
   },
 
-  // OAuth: get enabled providers
   getOAuthProviders: async (): Promise<{ providers: OAuthProvider[] }> => {
     const response = await apiClient.get<{ providers: OAuthProvider[] }>(
       '/cabinet/auth/oauth/providers',
@@ -184,7 +167,6 @@ export const authApi = {
     return response.data;
   },
 
-  // OAuth: get authorization URL
   getOAuthAuthorizeUrl: async (
     provider: string,
   ): Promise<{ authorize_url: string; state: string }> => {
@@ -194,7 +176,6 @@ export const authApi = {
     return response.data;
   },
 
-  // OAuth: callback (exchange code for tokens)
   oauthCallback: async (
     provider: string,
     code: string,
@@ -216,7 +197,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Account linking
   getLinkedProviders: async (): Promise<LinkedProvidersResponse> => {
     const response = await apiClient.get<LinkedProvidersResponse>(
       '/cabinet/auth/account/linked-providers',
@@ -248,7 +228,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Link Telegram account (Mini App initData, OIDC id_token, or Login Widget data)
   linkTelegram: async (
     data:
       | { init_data: string }
@@ -270,8 +249,6 @@ export const authApi = {
     return response.data;
   },
 
-  // Server-side OAuth linking completion (no JWT needed — auth via state token)
-  // Used when OAuth opens in external browser from Telegram Mini App
   linkServerComplete: async (
     code: string,
     state: string,
@@ -295,13 +272,11 @@ export const authApi = {
     return response.data;
   },
 
-  // Auto-login from guest purchase success page
   autoLogin: async (token: string): Promise<AuthResponse> => {
     const response = await apiClient.post<AuthResponse>('/cabinet/auth/login/auto', { token });
     return response.data;
   },
 
-  // Account merge (no JWT required)
   getMergePreview: async (mergeToken: string): Promise<MergePreviewResponse> => {
     const response = await apiClient.get<MergePreviewResponse>(
       `/cabinet/auth/merge/${encodeURIComponent(mergeToken)}`,

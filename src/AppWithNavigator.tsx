@@ -39,9 +39,7 @@ function TelegramBackButton() {
       } else {
         showBackButton();
       }
-    } catch {
-      // Back button not mounted
-    }
+    } catch {}
   }, [location]);
 
   // Stable handler — ref prevents re-subscription on every render
@@ -52,15 +50,11 @@ function TelegramBackButton() {
   useEffect(() => {
     try {
       onBackButtonClick(handler);
-    } catch {
-      // Back button not mounted
-    }
+    } catch {}
     return () => {
       try {
         offBackButtonClick(handler);
-      } catch {
-        // Back button not mounted
-      }
+      } catch {}
     };
   }, [handler]);
 

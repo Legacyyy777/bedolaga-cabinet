@@ -12,19 +12,16 @@ import type {
 } from '../types';
 
 export const subscriptionApi = {
-  // Get current subscription status
   getSubscription: async (): Promise<SubscriptionStatusResponse> => {
     const response = await apiClient.get<SubscriptionStatusResponse>('/cabinet/subscription');
     return response.data;
   },
 
-  // Get renewal options
   getRenewalOptions: async (): Promise<RenewalOption[]> => {
     const response = await apiClient.get<RenewalOption[]>('/cabinet/subscription/renewal-options');
     return response.data;
   },
 
-  // Renew subscription
   renewSubscription: async (
     periodDays: number,
   ): Promise<{
@@ -38,7 +35,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Get traffic packages
   getTrafficPackages: async (): Promise<TrafficPackage[]> => {
     const response = await apiClient.get<TrafficPackage[]>(
       '/cabinet/subscription/traffic-packages',
@@ -46,7 +42,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Purchase traffic
   purchaseTraffic: async (
     gb: number,
   ): Promise<{
@@ -58,7 +53,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Purchase devices
   purchaseDevices: async (
     devices: number,
   ): Promise<{
@@ -75,7 +69,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Get device purchase price
   getDevicePrice: async (
     devices: number = 1,
   ): Promise<{
@@ -103,12 +96,10 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Save devices cart for later purchase after top-up
   saveDevicesCart: async (devices: number): Promise<void> => {
     await apiClient.post('/cabinet/subscription/devices/save-cart', { devices });
   },
 
-  // Get device reduction info (for reducing device limit)
   getDeviceReductionInfo: async (): Promise<{
     available: boolean;
     reason?: string;
@@ -121,7 +112,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Reduce device limit
   reduceDevices: async (
     newDeviceLimit: number,
   ): Promise<{
@@ -136,12 +126,10 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Save traffic cart for later purchase after top-up
   saveTrafficCart: async (trafficGb: number): Promise<void> => {
     await apiClient.post('/cabinet/subscription/traffic/save-cart', { gb: trafficGb });
   },
 
-  // Update autopay settings
   updateAutopay: async (
     enabled: boolean,
     daysBefore?: number,
@@ -157,25 +145,21 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Get trial info
   getTrialInfo: async (): Promise<TrialInfo> => {
     const response = await apiClient.get<TrialInfo>('/cabinet/subscription/trial');
     return response.data;
   },
 
-  // Activate trial
   activateTrial: async (): Promise<Subscription> => {
     const response = await apiClient.post<Subscription>('/cabinet/subscription/trial');
     return response.data;
   },
 
-  // Get purchase options (periods, servers, traffic, devices)
   getPurchaseOptions: async (): Promise<PurchaseOptions> => {
     const response = await apiClient.get<PurchaseOptions>('/cabinet/subscription/purchase-options');
     return response.data;
   },
 
-  // Preview purchase price
   previewPurchase: async (selection: PurchaseSelection): Promise<PurchasePreview> => {
     const response = await apiClient.post<PurchasePreview>(
       '/cabinet/subscription/purchase-preview',
@@ -186,7 +170,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Submit purchase
   submitPurchase: async (
     selection: PurchaseSelection,
   ): Promise<{
@@ -201,7 +184,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Purchase tariff (for tariffs mode)
   purchaseTariff: async (
     tariffId: number,
     periodDays: number,
@@ -223,13 +205,11 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Get app config for connection
   getAppConfig: async (): Promise<AppConfig> => {
     const response = await apiClient.get<AppConfig>('/cabinet/subscription/app-config');
     return response.data;
   },
 
-  // Get available countries/servers
   getCountries: async (): Promise<{
     countries: Array<{
       uuid: string;
@@ -253,7 +233,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Update countries/servers
   updateCountries: async (
     countries: string[],
   ): Promise<{
@@ -267,7 +246,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Get connection link and instructions
   getConnectionLink: async (): Promise<{
     subscription_url: string | null;
     display_link: string | null;
@@ -283,7 +261,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Get hApp download links
   getHappDownloads: async (): Promise<{
     platforms: Record<
       string,
@@ -299,9 +276,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // ============ Device Management ============
-
-  // Get connected devices
   getDevices: async (): Promise<{
     devices: Array<{
       hwid: string;
@@ -316,7 +290,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Delete a specific device
   deleteDevice: async (
     hwid: string,
   ): Promise<{
@@ -330,7 +303,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Delete all devices
   deleteAllDevices: async (): Promise<{
     success: boolean;
     message: string;
@@ -340,9 +312,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // ============ Tariff Switch ============
-
-  // Preview tariff switch cost
   previewTariffSwitch: async (
     tariffId: number,
   ): Promise<{
@@ -372,7 +341,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // Switch to a different tariff
   switchTariff: async (
     tariffId: number,
   ): Promise<{
@@ -393,9 +361,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // ============ Subscription Pause (Daily Tariffs) ============
-
-  // Toggle pause/resume for daily subscription
   togglePause: async (): Promise<{
     success: boolean;
     message: string;
@@ -407,9 +372,6 @@ export const subscriptionApi = {
     return response.data;
   },
 
-  // ============ Traffic Switch ============
-
-  // Switch to a different traffic package
   switchTraffic: async (
     gb: number,
   ): Promise<{
