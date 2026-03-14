@@ -577,8 +577,10 @@
   },
   "referral": {
     "title": "برنامه معرفی",
-    "yourLink": "لینک معرفی شما",
-    "copyLink": "کپی لینک",
+    "yourLink": "لینک‌های معرفی شما",
+    "botLink": "لینک ربات",
+    "cabinetLink": "لینک کابینت",
+    "copyLink": "کپی",
     "copied": "کپی شد!",
     "shareButton": "اشتراک‌گذاری",
     "shareMessage": "از طریق لینک من به {{botName}} بپیوند و تا {{percent}}٪ پاداش بگیر!",

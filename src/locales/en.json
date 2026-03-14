@@ -726,8 +726,10 @@
   },
   "referral": {
     "title": "Referral Program",
-    "yourLink": "Your Referral Link",
-    "copyLink": "Copy Link",
+    "yourLink": "Your Referral Links",
+    "botLink": "Bot link",
+    "cabinetLink": "Cabinet link",
+    "copyLink": "Copy",
     "copied": "Copied!",
     "shareButton": "Share",
     "shareMessage": "Join me on {{botName}} and earn up to {{percent}}% cashback!",

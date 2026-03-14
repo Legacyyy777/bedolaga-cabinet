@@ -419,6 +419,7 @@ export interface PaymentMethod {
 export interface ReferralInfo {
   referral_code: string;
   referral_link: string;
+  bot_referral_link?: string;
   total_referrals: number;
   active_referrals: number;
   total_earnings_kopeks: number;

@@ -94,7 +94,7 @@ export default function Referral() {
   const navigate = useNavigate();
   const { formatAmount, currencySymbol, formatPositive, formatWithCurrency } = useCurrency();
   const queryClient = useQueryClient();
-  const [copied, setCopied] = useState(false);
+  const [copiedLink, setCopiedLink] = useState<'cabinet' | 'bot' | null>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -112,6 +112,7 @@ export default function Referral() {
   const referralLink = info?.referral_code
     ? `${window.location.origin}/login?ref=${info.referral_code}`
     : '';
+  const botReferralLink = info?.bot_referral_link || '';
 
   const { data: terms } = useQuery({
     queryKey: ['referral-terms'],
@@ -213,13 +214,13 @@ export default function Referral() {
     );
   }, [terms, t, formatAmount, formatPositive, currencySymbol]);
 
-  const copyLink = async () => {
-    if (!referralLink) return;
+  const copyLink = async (link: string, type: 'cabinet' | 'bot') => {
+    if (!link) return;
     try {
-      await copyToClipboard(referralLink);
-      setCopied(true);
+      await copyToClipboard(link);
+      setCopiedLink(type);
       if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
-      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
+      copyTimerRef.current = setTimeout(() => setCopiedLink(null), 2000);
     } catch {
       // clipboard write failed silently
     }
@@ -315,32 +316,85 @@ export default function Referral() {
         </div>
       </div>
 
-      {/* Referral Link */}
+      {/* Referral Links */}
       <div className="bento-card">
         <h2 className="mb-4 text-lg font-semibold text-dark-100">{t('referral.yourLink')}</h2>
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <input type="text" readOnly value={referralLink} className="input flex-1" />
-          <div className="flex gap-2">
-            <button
-              onClick={copyLink}
-              disabled={!referralLink}
-              className={`btn-primary px-5 ${
-                copied ? 'bg-success-500 hover:bg-success-500' : ''
-              } ${!referralLink ? 'cursor-not-allowed opacity-50' : ''}`}
-            >
-              {copied ? <CheckIcon /> : <CopyIcon />}
-              <span className="ml-2">{copied ? t('referral.copied') : t('referral.copyLink')}</span>
-            </button>
-            <button
-              onClick={shareLink}
-              disabled={!referralLink}
-              className={`btn-secondary flex items-center px-5 ${
-                !referralLink ? 'cursor-not-allowed opacity-50' : ''
-              }`}
-            >
-              <ShareIcon />
-              <span className="ml-2">{t('referral.shareButton')}</span>
-            </button>
+        <div className="space-y-3">
+          {/* Bot link */}
+          {botReferralLink && (
+            <div>
+              <div className="mb-1.5 flex items-center gap-2 text-sm font-medium text-dark-300">
+                <svg className="h-4 w-4 text-accent-400" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+                </svg>
+                {t('referral.botLink')}
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <input
+                  type="text"
+                  readOnly
+                  value={botReferralLink}
+                  className="input flex-1 text-sm"
+                />
+                <button
+                  onClick={() => copyLink(botReferralLink, 'bot')}
+                  className={`btn-primary shrink-0 px-4 ${
+                    copiedLink === 'bot' ? 'bg-success-500 hover:bg-success-500' : ''
+                  }`}
+                >
+                  {copiedLink === 'bot' ? <CheckIcon /> : <CopyIcon />}
+                  <span className="ml-2">
+                    {copiedLink === 'bot' ? t('referral.copied') : t('referral.copyLink')}
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
+          {/* Cabinet link */}
+          <div>
+            <div className="mb-1.5 flex items-center gap-2 text-sm font-medium text-dark-300">
+              <svg
+                className="h-4 w-4 text-accent-400"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                />
+              </svg>
+              {t('referral.cabinetLink')}
+            </div>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <input type="text" readOnly value={referralLink} className="input flex-1 text-sm" />
+              <div className="flex gap-2">
+                <button
+                  onClick={() => copyLink(referralLink, 'cabinet')}
+                  disabled={!referralLink}
+                  className={`btn-primary shrink-0 px-4 ${
+                    copiedLink === 'cabinet' ? 'bg-success-500 hover:bg-success-500' : ''
+                  } ${!referralLink ? 'cursor-not-allowed opacity-50' : ''}`}
+                >
+                  {copiedLink === 'cabinet' ? <CheckIcon /> : <CopyIcon />}
+                  <span className="ml-2">
+                    {copiedLink === 'cabinet' ? t('referral.copied') : t('referral.copyLink')}
+                  </span>
+                </button>
+                <button
+                  onClick={shareLink}
+                  disabled={!referralLink}
+                  className={`btn-secondary flex shrink-0 items-center px-4 ${
+                    !referralLink ? 'cursor-not-allowed opacity-50' : ''
+                  }`}
+                >
+                  <ShareIcon />
+                  <span className="ml-2">{t('referral.shareButton')}</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <p className="mt-3 text-sm text-dark-500">
