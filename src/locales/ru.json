@@ -1177,9 +1177,9 @@
         "earningsRub": "Заработок (₽)"
       },
       "subscription": {
-        "active": "active",
-        "trial": "trial",
-        "expired": "expired"
+        "active": "Активна",
+        "trial": "Триал",
+        "expired": "Истекла"
       }
     },
     "salesStats": {

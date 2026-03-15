@@ -280,9 +280,10 @@ export default function AdminReferralTree() {
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-500/20 text-sm font-medium text-accent-400">
                       {user.full_name?.[0] ?? user.username?.[0] ?? '?'}
                     </div>
-                    <div className="min-w-0 flex-1" onClick={(e) => e.stopPropagation()}>
+                    <div className="min-w-0 flex-1">
                       <Link
                         to={`/admin/users/${user.id}`}
+                        onClick={(e) => e.stopPropagation()}
                         className="font-medium text-dark-100 hover:text-accent-400 hover:underline"
                       >
                         {user.full_name}
