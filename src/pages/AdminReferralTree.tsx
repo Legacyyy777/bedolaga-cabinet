@@ -189,7 +189,7 @@ export default function AdminReferralTree() {
                   </Link>
 
                   {isExpanded && (
-                    <div className="pl-8 space-y-2">
+                    <div className="space-y-2 pl-8">
                       {isLoadingRefs ? (
                         <div className="flex items-center gap-2 py-2">
                           <div className="h-5 w-5 animate-spin rounded-full border-2 border-accent-500 border-t-transparent" />
