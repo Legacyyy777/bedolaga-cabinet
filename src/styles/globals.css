@@ -766,6 +766,21 @@ img.twemoji {
     @apply text-champagne-700;
   }
 
+  /* Select dropdown (Radix) — активная тема: светлая подложка */
+  .light .select-content-dropdown {
+    @apply border-champagne-300 bg-champagne-50/95 text-champagne-900 shadow-lg;
+  }
+  .light .select-content-item {
+    @apply text-champagne-800;
+  }
+  .light .select-content-item:hover,
+  .light .select-content-item:focus {
+    @apply bg-champagne-200/80 text-champagne-900;
+  }
+  .light .select-content-item[data-state='checked'] {
+    @apply text-accent-600;
+  }
+
   /* Badge - Light */
   .light .badge-success {
     @apply border border-success-200 bg-success-50 text-success-700;

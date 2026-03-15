@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { adminUsersApi, type UserListItem } from '@/api/adminUsers';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/primitives/Select';
 import { Skeleton } from '@/components/ui/Skeleton';
 
 const ChevronDownIcon = () => (
@@ -181,40 +182,52 @@ export default function AdminReferralTree() {
         <div className="flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.periodLabel')}</span>
-            <select
-              value={periodDays ?? ''}
-              onChange={(e) => setPeriodDays(e.target.value === '' ? null : Number(e.target.value))}
-              className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100"
-            >
-              <option value="">{t('admin.referralTree.periodAll')}</option>
-              <option value="7">{t('admin.referralTree.period7')}</option>
-              <option value="30">{t('admin.referralTree.period30')}</option>
-              <option value="60">{t('admin.referralTree.period60')}</option>
-            </select>
+            <div className="inline-flex min-w-[7rem]">
+              <Select
+                value={periodDays !== null ? String(periodDays) : 'all'}
+                onValueChange={(v) => setPeriodDays(v === 'all' ? null : Number(v))}
+              >
+                <SelectTrigger className="h-9 w-full rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+                <SelectContent>
+                  <SelectItem value="all">{t('admin.referralTree.periodAll')}</SelectItem>
+                  <SelectItem value="7">{t('admin.referralTree.period7')}</SelectItem>
+                  <SelectItem value="30">{t('admin.referralTree.period30')}</SelectItem>
+                  <SelectItem value="60">{t('admin.referralTree.period60')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </label>
           <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.sortLabel')}</span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'referrals' | 'earnings')}
-              className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100"
-            >
-              <option value="referrals">{t('admin.referralTree.sortReferrals')}</option>
-              <option value="earnings">{t('admin.referralTree.sortEarnings')}</option>
-            </select>
+            <div className="inline-flex min-w-[10rem]">
+              <Select
+                value={sortBy}
+                onValueChange={(v) => setSortBy(v as 'referrals' | 'earnings')}
+              >
+                <SelectTrigger className="h-9 w-full rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+                <SelectContent>
+                  <SelectItem value="referrals">{t('admin.referralTree.sortReferrals')}</SelectItem>
+                  <SelectItem value="earnings">{t('admin.referralTree.sortEarnings')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </label>
           <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.topLabel')}</span>
-            <select
-              value={topN ?? ''}
-              onChange={(e) => setTopN(e.target.value === '' ? null : Number(e.target.value))}
-              className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100"
-            >
-              <option value="">{t('admin.referralTree.topAll')}</option>
-              <option value="10">10</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
+            <div className="inline-flex min-w-[5rem]">
+              <Select
+                value={topN !== null ? String(topN) : 'all'}
+                onValueChange={(v) => setTopN(v === 'all' ? null : Number(v))}
+              >
+                <SelectTrigger className="h-9 w-full rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+                <SelectContent>
+                  <SelectItem value="all">{t('admin.referralTree.topAll')}</SelectItem>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                  <SelectItem value="100">100</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </label>
           <button
             type="button"

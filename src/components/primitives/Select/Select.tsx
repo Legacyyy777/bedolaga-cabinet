@@ -40,24 +40,28 @@ export interface SelectTriggerProps extends ComponentPropsWithoutRef<
 }
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
-  ({ className, placeholder, ...props }, ref) => {
+  ({ className, placeholder, onClick, ...props }, ref) => {
     const { haptic } = usePlatform();
 
     return (
       <SelectPrimitive.Trigger
         ref={ref}
+        type="button"
         className={cn(
-          'flex h-10 w-full items-center justify-between gap-2 rounded-linear px-3',
+          'flex h-10 w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-linear px-3',
           'border border-dark-700/50 bg-dark-800/80',
           'text-sm text-dark-100 placeholder:text-dark-400',
           'hover:border-dark-600/50 hover:bg-dark-700/80',
           'focus:outline-none focus:ring-2 focus:ring-accent-500/50 focus:ring-offset-2 focus:ring-offset-dark-950',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'transition-all duration-200',
-          '[&>span]:line-clamp-1',
+          '[&>span]:line-clamp-1 [&>span]:min-w-0',
           className,
         )}
-        onClick={() => haptic.impact('light')}
+        onClick={(e) => {
+          haptic.impact('light');
+          onClick?.(e);
+        }}
         {...props}
       >
         <SelectPrimitive.Value placeholder={placeholder} />
@@ -80,6 +84,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
       <SelectPrimitive.Content
         ref={ref}
         className={cn(
+          'select-content-dropdown',
           'relative z-50 max-h-80 min-w-[8rem] overflow-hidden',
           'rounded-linear-lg border border-dark-700/50 bg-dark-900/95 backdrop-blur-linear',
           'text-dark-100 shadow-linear-lg',
@@ -125,6 +130,7 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
     <SelectPrimitive.Item
       ref={ref}
       className={cn(
+        'select-content-item',
         'relative flex w-full cursor-pointer select-none items-center rounded-linear py-2 pl-3 pr-8',
         'text-sm text-dark-200 outline-none',
         'hover:bg-dark-800/80 hover:text-dark-100',
