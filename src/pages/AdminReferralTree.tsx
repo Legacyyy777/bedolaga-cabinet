@@ -4,10 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { adminUsersApi, type UserListItem } from '@/api/adminUsers';
 import { Skeleton } from '@/components/ui/Skeleton';
 
-type UserWithReferralCount = UserListItem & {
-  referral?: { referrals_count: number };
-};
-
 const ChevronDownIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -50,7 +46,7 @@ function SubscriptionBadge({ status }: { status: string | null }) {
 
 export default function AdminReferralTree() {
   const { t } = useTranslation();
-  const [users, setUsers] = useState<UserWithReferralCount[]>([]);
+  const [users, setUsers] = useState<UserListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -63,7 +59,7 @@ export default function AdminReferralTree() {
     setError(null);
     try {
       const data = await adminUsersApi.getUsers({ limit: 200 });
-      const withReferrals = (data.users as UserWithReferralCount[]).filter(
+      const withReferrals = data.users.filter(
         (u) => (u.referral?.referrals_count ?? 0) > 0,
       );
       setUsers(withReferrals);
@@ -155,7 +151,7 @@ export default function AdminReferralTree() {
         ) : (
           <div className="space-y-4">
             {filteredUsers.map((user) => {
-              const count = (user as UserWithReferralCount).referral?.referrals_count ?? 0;
+              const count = user.referral?.referrals_count ?? 0;
               const isExpanded = expanded.has(user.id);
               const refs = referralsCache.get(user.id) ?? [];
               const isLoadingRefs = loadingReferrals.has(user.id);

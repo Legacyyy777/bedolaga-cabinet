@@ -56,6 +56,8 @@ export interface UserListItem {
   has_restrictions: boolean;
   restriction_topup: boolean;
   restriction_subscription: boolean;
+  /** Present when user has at least one referral (from list API). */
+  referral?: { referrals_count: number };
 }
 
 export interface UsersListResponse {
