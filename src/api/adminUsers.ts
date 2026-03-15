@@ -404,10 +404,17 @@ export const adminUsersApi = {
   },
 
   // List users who have at least one referral (for referral tree), sorted by referrals count desc
-  getReferrers: async (params?: { top?: number; limit?: number }): Promise<UsersListResponse> => {
-    const response = await apiClient.get('/cabinet/admin/users/referrers', {
-      params: params?.top != null ? { top: params.top } : { limit: params?.limit ?? 500 },
-    });
+  getReferrers: async (params?: {
+    top?: number;
+    limit?: number;
+    days?: number | null;
+    sort_by?: 'referrals' | 'earnings';
+  }): Promise<UsersListResponse> => {
+    const query: Record<string, number | string> =
+      params?.top != null ? { top: params.top } : { limit: params?.limit ?? 500 };
+    if (params?.days != null && [7, 30, 60].includes(params.days)) query.days = params.days;
+    if (params?.sort_by) query.sort_by = params.sort_by;
+    const response = await apiClient.get('/cabinet/admin/users/referrers', { params: query });
     return response.data;
   },
 

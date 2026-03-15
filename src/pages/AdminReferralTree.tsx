@@ -54,14 +54,20 @@ export default function AdminReferralTree() {
   const [loadingReferrals, setLoadingReferrals] = useState<Set<number>>(new Set());
 
   const [topN, setTopN] = useState<number | null>(null);
+  const [periodDays, setPeriodDays] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<'referrals' | 'earnings'>('referrals');
 
   const loadUsers = useCallback(
-    async (top: number | null) => {
+    async (top: number | null, days: number | null, sort: 'referrals' | 'earnings') => {
       setLoading(true);
       setError(null);
       try {
         try {
-          const data = await adminUsersApi.getReferrers(top != null ? { top } : { limit: 500 });
+          const data = await adminUsersApi.getReferrers({
+            ...(top != null ? { top } : { limit: 500 }),
+            ...(days != null ? { days } : {}),
+            sort_by: sort,
+          });
           setUsers(data.users);
         } catch (referrersErr: unknown) {
           const is404 =
@@ -87,8 +93,8 @@ export default function AdminReferralTree() {
   );
 
   useEffect(() => {
-    loadUsers(topN);
-  }, [topN, loadUsers]);
+    loadUsers(topN, periodDays, sortBy);
+  }, [topN, periodDays, sortBy, loadUsers]);
 
   const filteredUsers = searchQuery.trim()
     ? users.filter((u) => {
@@ -174,6 +180,30 @@ export default function AdminReferralTree() {
       <div className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-sm text-dark-400">
+            <span>{t('admin.referralTree.periodLabel')}</span>
+            <select
+              value={periodDays ?? ''}
+              onChange={(e) => setPeriodDays(e.target.value === '' ? null : Number(e.target.value))}
+              className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100"
+            >
+              <option value="">{t('admin.referralTree.periodAll')}</option>
+              <option value="7">{t('admin.referralTree.period7')}</option>
+              <option value="30">{t('admin.referralTree.period30')}</option>
+              <option value="60">{t('admin.referralTree.period60')}</option>
+            </select>
+          </label>
+          <label className="flex items-center gap-2 text-sm text-dark-400">
+            <span>{t('admin.referralTree.sortLabel')}</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'referrals' | 'earnings')}
+              className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100"
+            >
+              <option value="referrals">{t('admin.referralTree.sortReferrals')}</option>
+              <option value="earnings">{t('admin.referralTree.sortEarnings')}</option>
+            </select>
+          </label>
+          <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.topLabel')}</span>
             <select
               value={topN ?? ''}
@@ -230,17 +260,39 @@ export default function AdminReferralTree() {
 
               return (
                 <div key={user.id} className="space-y-2">
-                  <Link
-                    to={`/admin/users/${user.id}`}
-                    className="flex items-center gap-3 rounded-xl border border-dark-700/50 bg-dark-800/40 p-3 transition-all hover:border-dark-600 hover:bg-dark-800/80"
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => toggleExpand(user.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleExpand(user.id);
+                      }
+                    }}
+                    className="flex cursor-pointer items-center gap-3 rounded-xl border border-dark-700/50 bg-dark-800/40 p-3 transition-all hover:border-dark-600 hover:bg-dark-800/80"
+                    aria-expanded={isExpanded}
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-500/20 text-sm font-medium text-accent-400">
                       {user.full_name?.[0] ?? user.username?.[0] ?? '?'}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="font-medium text-dark-100">{user.full_name}</div>
+                    <div className="min-w-0 flex-1" onClick={(e) => e.stopPropagation()}>
+                      <Link
+                        to={`/admin/users/${user.id}`}
+                        className="font-medium text-dark-100 hover:text-accent-400 hover:underline"
+                      >
+                        {user.full_name}
+                      </Link>
                       {user.username && (
-                        <div className="text-sm text-dark-500">@{user.username}</div>
+                        <div className="text-sm text-dark-500">
+                          <Link
+                            to={`/admin/users/${user.id}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="hover:text-accent-400 hover:underline"
+                          >
+                            @{user.username}
+                          </Link>
+                        </div>
                       )}
                     </div>
                     <span className="shrink-0 text-right text-sm text-success-400">
@@ -249,19 +301,10 @@ export default function AdminReferralTree() {
                     <span className="shrink-0 rounded-full border border-dark-600 bg-dark-700/50 px-2 py-0.5 text-xs text-dark-300">
                       {t('admin.referralTree.referralsCount', { count })}
                     </span>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleExpand(user.id);
-                      }}
-                      className="shrink-0 rounded-lg p-1 text-dark-400 transition-colors hover:bg-dark-700 hover:text-dark-200"
-                      aria-expanded={isExpanded}
-                    >
+                    <span className="shrink-0 text-dark-400" aria-hidden>
                       {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                    </button>
-                  </Link>
+                    </span>
+                  </div>
 
                   {isExpanded && (
                     <div className="space-y-2 pl-8">
