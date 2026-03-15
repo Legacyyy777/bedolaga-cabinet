@@ -1133,6 +1133,7 @@
       "title": "Referral Tree",
       "subtitle": "{{count}} referrers",
       "empty": "No referrers",
+      "emptyHint": "Users will appear here when someone signs up via a referral link.",
       "referralsCount": "{{count}} referrals",
       "noReferrals": "No referrals",
       "subscription": {

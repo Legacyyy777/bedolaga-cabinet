@@ -973,6 +973,7 @@
       "title": "推荐树",
       "subtitle": "{{count}} 个推荐人",
       "empty": "没有推荐人",
+      "emptyHint": "当有人通过推荐链接注册后，用户将显示在此处。",
       "referralsCount": "{{count}} 个推荐",
       "noReferrals": "没有推荐",
       "subscription": {

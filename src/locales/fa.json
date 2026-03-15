@@ -973,6 +973,7 @@
       "title": "درخت معرف",
       "subtitle": "{{count}} معرف",
       "empty": "معرفی وجود ندارد",
+      "emptyHint": "با ثبت‌نام کاربران از طریق لینک معرف، آن‌ها اینجا نمایش داده می‌شوند.",
       "referralsCount": "{{count}} معرف",
       "noReferrals": "معرفی وجود ندارد",
       "subscription": {

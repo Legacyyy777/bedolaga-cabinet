@@ -57,8 +57,23 @@ export default function AdminReferralTree() {
     setLoading(true);
     setError(null);
     try {
-      const data = await adminUsersApi.getReferrers(500);
-      setUsers(data.users);
+      try {
+        const data = await adminUsersApi.getReferrers(500);
+        setUsers(data.users);
+      } catch (referrersErr: unknown) {
+        const is404 =
+          referrersErr &&
+          typeof referrersErr === 'object' &&
+          'response' in referrersErr &&
+          (referrersErr as { response?: { status?: number } }).response?.status === 404;
+        if (is404) {
+          const data = await adminUsersApi.getUsers({ limit: 500 });
+          const withReferrals = data.users.filter((u) => (u.referral?.referrals_count ?? 0) > 0);
+          setUsers(withReferrals);
+        } else {
+          throw referrersErr;
+        }
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : t('common.error'));
     } finally {
@@ -141,8 +156,9 @@ export default function AdminReferralTree() {
             {error}
           </div>
         ) : filteredUsers.length === 0 ? (
-          <div className="rounded-xl border border-dark-700/50 bg-dark-800/40 p-8 text-center text-dark-400">
-            {t('admin.referralTree.empty')}
+          <div className="rounded-xl border border-dark-700/50 bg-dark-800/40 p-8 text-center">
+            <p className="text-dark-300">{t('admin.referralTree.empty')}</p>
+            <p className="mt-2 text-sm text-dark-500">{t('admin.referralTree.emptyHint')}</p>
           </div>
         ) : (
           <div className="space-y-4">
