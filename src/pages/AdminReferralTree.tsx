@@ -179,14 +179,16 @@ export default function AdminReferralTree() {
       </div>
 
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <label className="flex items-center gap-2 text-sm text-dark-400">
-            <span>{t('admin.referralTree.periodLabel')}</span>
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
+          <label className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+            <span className="text-xs text-dark-400 sm:text-sm">
+              {t('admin.referralTree.periodLabel')}
+            </span>
             <Select
               value={periodDays !== null ? String(periodDays) : 'all'}
               onValueChange={(v) => setPeriodDays(v === 'all' ? null : Number(v))}
             >
-              <SelectTrigger className="h-9 min-w-[7rem] rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+              <SelectTrigger className="h-8 min-w-0 rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1 text-sm text-dark-100 sm:h-9 sm:min-w-[7rem] sm:py-1.5" />
               <SelectContent>
                 <SelectItem value="all">{t('admin.referralTree.periodAll')}</SelectItem>
                 <SelectItem value="7">{t('admin.referralTree.period7')}</SelectItem>
@@ -195,23 +197,27 @@ export default function AdminReferralTree() {
               </SelectContent>
             </Select>
           </label>
-          <label className="flex items-center gap-2 text-sm text-dark-400">
-            <span>{t('admin.referralTree.sortLabel')}</span>
+          <label className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+            <span className="text-xs text-dark-400 sm:text-sm">
+              {t('admin.referralTree.sortLabel')}
+            </span>
             <Select value={sortBy} onValueChange={(v) => setSortBy(v as 'referrals' | 'earnings')}>
-              <SelectTrigger className="h-9 min-w-[12rem] rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+              <SelectTrigger className="h-8 min-w-0 rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1 text-sm text-dark-100 sm:h-9 sm:min-w-[12rem] sm:py-1.5" />
               <SelectContent>
                 <SelectItem value="referrals">{t('admin.referralTree.sortReferrals')}</SelectItem>
                 <SelectItem value="earnings">{t('admin.referralTree.sortEarnings')}</SelectItem>
               </SelectContent>
             </Select>
           </label>
-          <label className="flex items-center gap-2 text-sm text-dark-400">
-            <span>{t('admin.referralTree.topLabel')}</span>
+          <label className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+            <span className="text-xs text-dark-400 sm:text-sm">
+              {t('admin.referralTree.topLabel')}
+            </span>
             <Select
               value={topN !== null ? String(topN) : 'all'}
               onValueChange={(v) => setTopN(v === 'all' ? null : Number(v))}
             >
-              <SelectTrigger className="h-9 min-w-[5rem] rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+              <SelectTrigger className="h-8 min-w-0 rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1 text-sm text-dark-100 sm:h-9 sm:min-w-[5rem] sm:py-1.5" />
               <SelectContent>
                 <SelectItem value="all">{t('admin.referralTree.topAll')}</SelectItem>
                 <SelectItem value="10">10</SelectItem>
@@ -220,14 +226,16 @@ export default function AdminReferralTree() {
               </SelectContent>
             </Select>
           </label>
-          <button
-            type="button"
-            onClick={handleExportCSV}
-            disabled={users.length === 0}
-            className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-3 py-1.5 text-sm text-dark-200 transition-colors hover:bg-dark-700 disabled:opacity-50"
-          >
-            {t('admin.referralTree.exportBtn')}
-          </button>
+          <div className="col-span-2 sm:col-span-1">
+            <button
+              type="button"
+              onClick={handleExportCSV}
+              disabled={users.length === 0}
+              className="h-8 w-full rounded-lg border border-dark-700/50 bg-dark-800/40 px-3 py-1.5 text-sm text-dark-200 transition-colors hover:bg-dark-700 disabled:opacity-50 sm:h-9 sm:w-auto"
+            >
+              {t('admin.referralTree.exportBtn')}
+            </button>
+          </div>
         </div>
         <div>
           <input
@@ -274,22 +282,22 @@ export default function AdminReferralTree() {
                         toggleExpand(user.id);
                       }
                     }}
-                    className="flex cursor-pointer items-center gap-3 rounded-xl border border-dark-700/50 bg-dark-800/40 p-3 transition-all hover:border-dark-600 hover:bg-dark-800/80"
+                    className="flex cursor-pointer flex-wrap items-center gap-2 rounded-xl border border-dark-700/50 bg-dark-800/40 p-3 transition-all hover:border-dark-600 hover:bg-dark-800/80 sm:gap-3"
                     aria-expanded={isExpanded}
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-500/20 text-sm font-medium text-accent-400">
                       {user.full_name?.[0] ?? user.username?.[0] ?? '?'}
                     </div>
-                    <div className="min-w-0 flex-1">
+                    <div className="min-w-0 flex-1 basis-0">
                       <Link
                         to={`/admin/users/${user.id}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="font-medium text-dark-100 hover:text-accent-400 hover:underline"
+                        className="block truncate font-medium text-dark-100 hover:text-accent-400 hover:underline"
                       >
-                        {user.full_name}
+                        {user.full_name || user.username || `#${user.id}`}
                       </Link>
                       {user.username && (
-                        <div className="text-sm text-dark-500">
+                        <div className="truncate text-sm text-dark-500">
                           <Link
                             to={`/admin/users/${user.id}`}
                             onClick={(e) => e.stopPropagation()}
@@ -300,7 +308,7 @@ export default function AdminReferralTree() {
                         </div>
                       )}
                     </div>
-                    <span className="shrink-0 text-right text-sm text-success-400">
+                    <span className="order-last w-full shrink-0 text-right text-sm text-success-400 sm:order-none sm:w-auto">
                       {t('admin.referralTree.earnings')}: {earningsRub} ₽
                     </span>
                     <span className="shrink-0 rounded-full border border-dark-600 bg-dark-700/50 px-2 py-0.5 text-xs text-dark-300">
