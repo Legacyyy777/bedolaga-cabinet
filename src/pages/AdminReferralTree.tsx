@@ -90,6 +90,15 @@ export default function AdminReferralTree() {
     loadUsers(topN);
   }, [topN, loadUsers]);
 
+  const filteredUsers = searchQuery.trim()
+    ? users.filter((u) => {
+        const q = searchQuery.toLowerCase();
+        const name = (u.full_name ?? '').toLowerCase();
+        const un = (u.username ?? '').toLowerCase();
+        return name.includes(q) || un.includes(q);
+      })
+    : users;
+
   const handleExportCSV = useCallback(() => {
     const list = searchQuery.trim() ? filteredUsers : users;
     const header = [
@@ -152,15 +161,6 @@ export default function AdminReferralTree() {
     },
     [expanded, referralsCache, t],
   );
-
-  const filteredUsers = searchQuery.trim()
-    ? users.filter((u) => {
-        const q = searchQuery.toLowerCase();
-        const name = (u.full_name ?? '').toLowerCase();
-        const un = (u.username ?? '').toLowerCase();
-        return name.includes(q) || un.includes(q);
-      })
-    : users;
 
   return (
     <div className="animate-fade-in space-y-4">
