@@ -182,52 +182,43 @@ export default function AdminReferralTree() {
         <div className="flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.periodLabel')}</span>
-            <div className="relative h-9 min-w-[7rem] rounded-lg border border-dark-700/50 bg-dark-800/40">
-              <Select
-                value={periodDays !== null ? String(periodDays) : 'all'}
-                onValueChange={(v) => setPeriodDays(v === 'all' ? null : Number(v))}
-              >
-                <SelectTrigger className="absolute inset-0 h-full w-full rounded-lg border-0 bg-transparent px-2 py-1.5 pr-6 text-left text-dark-100 [&>span]:block [&>svg]:absolute [&>svg]:right-2 [&>svg]:top-1/2 [&>svg]:-translate-y-1/2" />
-                <SelectContent>
-                  <SelectItem value="all">{t('admin.referralTree.periodAll')}</SelectItem>
-                  <SelectItem value="7">{t('admin.referralTree.period7')}</SelectItem>
-                  <SelectItem value="30">{t('admin.referralTree.period30')}</SelectItem>
-                  <SelectItem value="60">{t('admin.referralTree.period60')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <Select
+              value={periodDays !== null ? String(periodDays) : 'all'}
+              onValueChange={(v) => setPeriodDays(v === 'all' ? null : Number(v))}
+            >
+              <SelectTrigger className="h-9 min-w-[7rem] rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+              <SelectContent>
+                <SelectItem value="all">{t('admin.referralTree.periodAll')}</SelectItem>
+                <SelectItem value="7">{t('admin.referralTree.period7')}</SelectItem>
+                <SelectItem value="30">{t('admin.referralTree.period30')}</SelectItem>
+                <SelectItem value="60">{t('admin.referralTree.period60')}</SelectItem>
+              </SelectContent>
+            </Select>
           </label>
           <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.sortLabel')}</span>
-            <div className="relative h-9 min-w-[10rem] rounded-lg border border-dark-700/50 bg-dark-800/40">
-              <Select
-                value={sortBy}
-                onValueChange={(v) => setSortBy(v as 'referrals' | 'earnings')}
-              >
-                <SelectTrigger className="absolute inset-0 h-full w-full rounded-lg border-0 bg-transparent px-2 py-1.5 pr-6 text-left text-dark-100 [&>span]:block [&>svg]:absolute [&>svg]:right-2 [&>svg]:top-1/2 [&>svg]:-translate-y-1/2" />
-                <SelectContent>
-                  <SelectItem value="referrals">{t('admin.referralTree.sortReferrals')}</SelectItem>
-                  <SelectItem value="earnings">{t('admin.referralTree.sortEarnings')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <Select value={sortBy} onValueChange={(v) => setSortBy(v as 'referrals' | 'earnings')}>
+              <SelectTrigger className="h-9 min-w-[12rem] rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+              <SelectContent>
+                <SelectItem value="referrals">{t('admin.referralTree.sortReferrals')}</SelectItem>
+                <SelectItem value="earnings">{t('admin.referralTree.sortEarnings')}</SelectItem>
+              </SelectContent>
+            </Select>
           </label>
           <label className="flex items-center gap-2 text-sm text-dark-400">
             <span>{t('admin.referralTree.topLabel')}</span>
-            <div className="relative h-9 min-w-[5rem] rounded-lg border border-dark-700/50 bg-dark-800/40">
-              <Select
-                value={topN !== null ? String(topN) : 'all'}
-                onValueChange={(v) => setTopN(v === 'all' ? null : Number(v))}
-              >
-                <SelectTrigger className="absolute inset-0 h-full w-full rounded-lg border-0 bg-transparent px-2 py-1.5 pr-6 text-left text-dark-100 [&>span]:block [&>svg]:absolute [&>svg]:right-2 [&>svg]:top-1/2 [&>svg]:-translate-y-1/2" />
-                <SelectContent>
-                  <SelectItem value="all">{t('admin.referralTree.topAll')}</SelectItem>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <Select
+              value={topN !== null ? String(topN) : 'all'}
+              onValueChange={(v) => setTopN(v === 'all' ? null : Number(v))}
+            >
+              <SelectTrigger className="h-9 min-w-[5rem] rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100" />
+              <SelectContent>
+                <SelectItem value="all">{t('admin.referralTree.topAll')}</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+              </SelectContent>
+            </Select>
           </label>
           <button
             type="button"
