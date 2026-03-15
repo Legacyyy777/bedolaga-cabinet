@@ -316,11 +316,7 @@ const RectangleGroupIcon = () => (
 
 const ReferralTreeIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 4v6m0 0l-4 5m4-5l4 5"
-    />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v6m0 0l-4 5m4-5l4 5" />
   </svg>
 );
 

@@ -31,7 +31,8 @@ function formatDate(iso: string): string {
 
 function SubscriptionBadge({ status }: { status: string | null }) {
   const { t } = useTranslation();
-  const key = status === 'active' || status === 'trial' || status === 'expired' ? status : 'expired';
+  const key =
+    status === 'active' || status === 'trial' || status === 'expired' ? status : 'expired';
   const label = t(`admin.referralTree.subscription.${key}`);
   const styles: Record<string, string> = {
     active: 'bg-success-500/20 text-success-400 border-success-500/30',
@@ -39,9 +40,7 @@ function SubscriptionBadge({ status }: { status: string | null }) {
     expired: 'bg-warning-500/20 text-warning-400 border-warning-500/30',
   };
   const style = styles[key] ?? styles.expired;
-  return (
-    <span className={`rounded-full border px-2 py-0.5 text-xs ${style}`}>{label}</span>
-  );
+  return <span className={`rounded-full border px-2 py-0.5 text-xs ${style}`}>{label}</span>;
 }
 
 export default function AdminReferralTree() {
@@ -59,9 +58,7 @@ export default function AdminReferralTree() {
     setError(null);
     try {
       const data = await adminUsersApi.getUsers({ limit: 200 });
-      const withReferrals = data.users.filter(
-        (u) => (u.referral?.referrals_count ?? 0) > 0,
-      );
+      const withReferrals = data.users.filter((u) => (u.referral?.referrals_count ?? 0) > 0);
       setUsers(withReferrals);
     } catch (e) {
       setError(e instanceof Error ? e.message : t('common.error'));
