@@ -316,7 +316,17 @@ const RectangleGroupIcon = () => (
 
 const ReferralTreeIcon = () => (
   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v6m0 0l-4 5m4-5l4 5" />
+    {/* Реферер (верхний узел) */}
+    <circle cx="12" cy="5.5" r="2.25" strokeWidth={1.5} />
+    {/* Соединительные линии к рефералам */}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 7.75v3.5M12 11.25l-4.5 4.5M12 11.25l4.5 4.5"
+    />
+    {/* Два реферала (нижние узлы) */}
+    <circle cx="7.5" cy="17" r="2.25" strokeWidth={1.5} />
+    <circle cx="16.5" cy="17" r="2.25" strokeWidth={1.5} />
   </svg>
 );
 

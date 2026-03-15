@@ -974,8 +974,19 @@
       "subtitle": "{{count}} معرف",
       "empty": "معرفی وجود ندارد",
       "emptyHint": "با ثبت‌نام کاربران از طریق لینک معرف، آن‌ها اینجا نمایش داده می‌شوند.",
+      "topLabel": "برتر",
+      "topAll": "همه",
+      "exportBtn": "خروجی CSV",
+      "earnings": "درآمد",
       "referralsCount": "{{count}} معرف",
       "noReferrals": "معرفی وجود ندارد",
+      "export": {
+        "place": "ردیف",
+        "name": "نام",
+        "username": "Username",
+        "referralsCount": "معرف‌ها",
+        "earningsRub": "درآمد (₽)"
+      },
       "subscription": {
         "active": "active",
         "trial": "trial",

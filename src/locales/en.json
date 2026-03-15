@@ -1134,8 +1134,19 @@
       "subtitle": "{{count}} referrers",
       "empty": "No referrers",
       "emptyHint": "Users will appear here when someone signs up via a referral link.",
+      "topLabel": "Top",
+      "topAll": "All",
+      "exportBtn": "Export CSV",
+      "earnings": "Earnings",
       "referralsCount": "{{count}} referrals",
       "noReferrals": "No referrals",
+      "export": {
+        "place": "#",
+        "name": "Name",
+        "username": "Username",
+        "referralsCount": "Referrals",
+        "earningsRub": "Earnings (₽)"
+      },
       "subscription": {
         "active": "active",
         "trial": "trial",

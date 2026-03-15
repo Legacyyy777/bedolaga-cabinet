@@ -57,7 +57,7 @@ export interface UserListItem {
   restriction_topup: boolean;
   restriction_subscription: boolean;
   /** Present when user has at least one referral (from list API). */
-  referral?: { referrals_count: number };
+  referral?: { referrals_count: number; total_earnings_kopeks?: number };
 }
 
 export interface UsersListResponse {
@@ -403,10 +403,10 @@ export const adminUsersApi = {
     return response.data;
   },
 
-  // List users who have at least one referral (for referral tree)
-  getReferrers: async (limit = 500): Promise<UsersListResponse> => {
+  // List users who have at least one referral (for referral tree), sorted by referrals count desc
+  getReferrers: async (params?: { top?: number; limit?: number }): Promise<UsersListResponse> => {
     const response = await apiClient.get('/cabinet/admin/users/referrers', {
-      params: { limit },
+      params: params?.top != null ? { top: params.top } : { limit: params?.limit ?? 500 },
     });
     return response.data;
   },

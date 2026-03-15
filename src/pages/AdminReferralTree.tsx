@@ -53,37 +53,72 @@ export default function AdminReferralTree() {
   const [referralsCache, setReferralsCache] = useState<Map<number, UserListItem[]>>(new Map());
   const [loadingReferrals, setLoadingReferrals] = useState<Set<number>>(new Set());
 
-  const loadUsers = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
+  const [topN, setTopN] = useState<number | null>(null);
+
+  const loadUsers = useCallback(
+    async (top: number | null) => {
+      setLoading(true);
+      setError(null);
       try {
-        const data = await adminUsersApi.getReferrers(500);
-        setUsers(data.users);
-      } catch (referrersErr: unknown) {
-        const is404 =
-          referrersErr &&
-          typeof referrersErr === 'object' &&
-          'response' in referrersErr &&
-          (referrersErr as { response?: { status?: number } }).response?.status === 404;
-        if (is404) {
-          const data = await adminUsersApi.getUsers({ limit: 500 });
-          const withReferrals = data.users.filter((u) => (u.referral?.referrals_count ?? 0) > 0);
-          setUsers(withReferrals);
-        } else {
-          throw referrersErr;
+        try {
+          const data = await adminUsersApi.getReferrers(top != null ? { top } : { limit: 500 });
+          setUsers(data.users);
+        } catch (referrersErr: unknown) {
+          const is404 =
+            referrersErr &&
+            typeof referrersErr === 'object' &&
+            'response' in referrersErr &&
+            (referrersErr as { response?: { status?: number } }).response?.status === 404;
+          if (is404) {
+            const data = await adminUsersApi.getUsers({ limit: 500 });
+            const withReferrals = data.users.filter((u) => (u.referral?.referrals_count ?? 0) > 0);
+            setUsers(withReferrals);
+          } else {
+            throw referrersErr;
+          }
         }
+      } catch (e) {
+        setError(e instanceof Error ? e.message : t('common.error'));
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : t('common.error'));
-    } finally {
-      setLoading(false);
-    }
-  }, [t]);
+    },
+    [t],
+  );
 
   useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
+    loadUsers(topN);
+  }, [topN, loadUsers]);
+
+  const handleExportCSV = useCallback(() => {
+    const list = searchQuery.trim() ? filteredUsers : users;
+    const header = [
+      t('admin.referralTree.export.place'),
+      t('admin.referralTree.export.name'),
+      t('admin.referralTree.export.username'),
+      t('admin.referralTree.export.referralsCount'),
+      t('admin.referralTree.export.earningsRub'),
+    ].join(',');
+    const rows = list.map((u, i) => {
+      const earnings = u.referral?.total_earnings_kopeks ?? 0;
+      const rub = (earnings / 100).toFixed(2);
+      return [
+        i + 1,
+        `"${(u.full_name ?? '').replace(/"/g, '""')}"`,
+        u.username ? `"@${u.username.replace(/"/g, '""')}"` : '',
+        u.referral?.referrals_count ?? 0,
+        rub,
+      ].join(',');
+    });
+    const csv = [header, ...rows].join('\r\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `referrers-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [users, filteredUsers, searchQuery, t]);
 
   const toggleExpand = useCallback(
     async (userId: number) => {
@@ -137,6 +172,29 @@ export default function AdminReferralTree() {
       </div>
 
       <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-3">
+          <label className="flex items-center gap-2 text-sm text-dark-400">
+            <span>{t('admin.referralTree.topLabel')}</span>
+            <select
+              value={topN ?? ''}
+              onChange={(e) => setTopN(e.target.value === '' ? null : Number(e.target.value))}
+              className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-2 py-1.5 text-dark-100"
+            >
+              <option value="">{t('admin.referralTree.topAll')}</option>
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            onClick={handleExportCSV}
+            disabled={users.length === 0}
+            className="rounded-lg border border-dark-700/50 bg-dark-800/40 px-3 py-1.5 text-sm text-dark-200 transition-colors hover:bg-dark-700 disabled:opacity-50"
+          >
+            {t('admin.referralTree.exportBtn')}
+          </button>
+        </div>
         <div>
           <input
             type="text"
@@ -164,6 +222,8 @@ export default function AdminReferralTree() {
           <div className="space-y-4">
             {filteredUsers.map((user) => {
               const count = user.referral?.referrals_count ?? 0;
+              const earningsKopeks = user.referral?.total_earnings_kopeks ?? 0;
+              const earningsRub = (earningsKopeks / 100).toFixed(2);
               const isExpanded = expanded.has(user.id);
               const refs = referralsCache.get(user.id) ?? [];
               const isLoadingRefs = loadingReferrals.has(user.id);
@@ -183,6 +243,9 @@ export default function AdminReferralTree() {
                         <div className="text-sm text-dark-500">@{user.username}</div>
                       )}
                     </div>
+                    <span className="shrink-0 text-right text-sm text-success-400">
+                      {t('admin.referralTree.earnings')}: {earningsRub} ₽
+                    </span>
                     <span className="shrink-0 rounded-full border border-dark-600 bg-dark-700/50 px-2 py-0.5 text-xs text-dark-300">
                       {t('admin.referralTree.referralsCount', { count })}
                     </span>

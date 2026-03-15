@@ -1155,8 +1155,19 @@
       "subtitle": "{{count}} рефереров",
       "empty": "Нет рефереров",
       "emptyHint": "Пользователи появятся здесь, когда кто-то перейдёт по реферальной ссылке и зарегистрируется.",
+      "topLabel": "Топ",
+      "topAll": "Все",
+      "exportBtn": "Выгрузить CSV",
+      "earnings": "Заработок",
       "referralsCount": "{{count}} рефералов",
       "noReferrals": "Нет рефералов",
+      "export": {
+        "place": "№",
+        "name": "Имя",
+        "username": "Username",
+        "referralsCount": "Рефералов",
+        "earningsRub": "Заработок (₽)"
+      },
       "subscription": {
         "active": "active",
         "trial": "trial",
