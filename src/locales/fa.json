@@ -913,6 +913,7 @@
       "emailTemplates": "قالب‌های ایمیل",
       "paymentMethods": "روش‌های پرداخت",
       "banSystem": "نظارت بر مسدودسازی",
+      "referralTree": "درخت معرف",
       "campaigns": "کمپین‌ها",
       "payments": "پرداخت‌ها",
       "promoOffers": "پیشنهادات تبلیغاتی",
@@ -947,6 +948,7 @@
       "emailTemplatesDesc": "مدیریت قالب‌های اعلان ایمیل",
       "paymentMethodsDesc": "تنظیم و ترتیب روش‌های پرداخت",
       "banSystemDesc": "نظارت بر مسدودسازی و تخلفات",
+      "referralTreeDesc": "چه کسی چه کسی را دعوت کرده",
       "campaignsDesc": "کمپین‌های تبلیغاتی",
       "paymentsDesc": "تأیید پرداخت",
       "promoOffersDesc": "تخفیف‌های شخصی",
@@ -966,6 +968,18 @@
       "auditLogDesc": "بررسی فعالیت سیستم و تاریخچه دسترسی",
       "salesStatsDesc": "تحلیل فروش و روندها",
       "landingsDesc": "صفحات خرید سریع"
+    },
+    "referralTree": {
+      "title": "درخت معرف",
+      "subtitle": "{{count}} معرف",
+      "empty": "معرفی وجود ندارد",
+      "referralsCount": "{{count}} معرف",
+      "noReferrals": "معرفی وجود ندارد",
+      "subscription": {
+        "active": "active",
+        "trial": "trial",
+        "expired": "expired"
+      }
     },
     "salesStats": {
       "title": "آمار فروش",

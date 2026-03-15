@@ -64,6 +64,7 @@ const AdminServers = lazy(() => import('./pages/AdminServers'));
 const AdminServerEdit = lazy(() => import('./pages/AdminServerEdit'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const AdminBanSystem = lazy(() => import('./pages/AdminBanSystem'));
+const AdminReferralTree = lazy(() => import('./pages/AdminReferralTree'));
 const AdminBroadcasts = lazy(() => import('./pages/AdminBroadcasts'));
 const AdminBroadcastCreate = lazy(() => import('./pages/AdminBroadcastCreate'));
 const AdminPromocodes = lazy(() => import('./pages/AdminPromocodes'));
@@ -645,6 +646,16 @@ function App() {
             <PermissionRoute permission="ban_system:read">
               <LazyPage>
                 <AdminBanSystem />
+              </LazyPage>
+            </PermissionRoute>
+          }
+        />
+        <Route
+          path="/admin/referral-tree"
+          element={
+            <PermissionRoute permission="users:read">
+              <LazyPage>
+                <AdminReferralTree />
               </LazyPage>
             </PermissionRoute>
           }

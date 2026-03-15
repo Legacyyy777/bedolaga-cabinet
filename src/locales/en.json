@@ -1070,6 +1070,7 @@
       "tariffs": "Tariffs",
       "servers": "Servers",
       "banSystem": "Ban Monitoring",
+      "referralTree": "Referral Tree",
       "broadcasts": "Broadcasts",
       "users": "Users",
       "payments": "Payments",
@@ -1104,6 +1105,7 @@
       "tariffsDesc": "Manage tariff plans",
       "serversDesc": "Configure VPN servers",
       "banSystemDesc": "Ban monitoring and violations",
+      "referralTreeDesc": "Who invited whom",
       "broadcastsDesc": "Mass messaging to users",
       "usersDesc": "Manage bot users",
       "paymentsDesc": "Payment verification",
@@ -1126,6 +1128,18 @@
       "auditLogDesc": "Review system activity and access history",
       "salesStatsDesc": "Sales analytics and trends",
       "landingsDesc": "Quick purchase landing pages"
+    },
+    "referralTree": {
+      "title": "Referral Tree",
+      "subtitle": "{{count}} referrers",
+      "empty": "No referrers",
+      "referralsCount": "{{count}} referrals",
+      "noReferrals": "No referrals",
+      "subscription": {
+        "active": "active",
+        "trial": "trial",
+        "expired": "expired"
+      }
     },
     "salesStats": {
       "title": "Sales Statistics",

@@ -913,6 +913,7 @@
       "emailTemplates": "邮件模板",
       "paymentMethods": "支付方式",
       "banSystem": "封禁监控",
+      "referralTree": "推荐树",
       "campaigns": "活动",
       "payments": "支付",
       "promoOffers": "促销优惠",
@@ -947,6 +948,7 @@
       "emailTemplatesDesc": "管理邮件通知模板",
       "paymentMethodsDesc": "配置支付方式排序和显示条件",
       "banSystemDesc": "封禁监控和违规",
+      "referralTreeDesc": "谁邀请了谁",
       "campaignsDesc": "广告活动",
       "paymentsDesc": "支付验证",
       "promoOffersDesc": "个性化折扣",
@@ -966,6 +968,18 @@
       "auditLogDesc": "查看系统活动和访问历史",
       "salesStatsDesc": "销售分析与趋势",
       "landingsDesc": "快速购买落地页"
+    },
+    "referralTree": {
+      "title": "推荐树",
+      "subtitle": "{{count}} 个推荐人",
+      "empty": "没有推荐人",
+      "referralsCount": "{{count}} 个推荐",
+      "noReferrals": "没有推荐",
+      "subscription": {
+        "active": "active",
+        "trial": "trial",
+        "expired": "expired"
+      }
     },
     "salesStats": {
       "title": "销售统计",
