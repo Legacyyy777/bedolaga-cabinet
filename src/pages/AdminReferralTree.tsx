@@ -57,9 +57,8 @@ export default function AdminReferralTree() {
     setLoading(true);
     setError(null);
     try {
-      const data = await adminUsersApi.getUsers({ limit: 200 });
-      const withReferrals = data.users.filter((u) => (u.referral?.referrals_count ?? 0) > 0);
-      setUsers(withReferrals);
+      const data = await adminUsersApi.getReferrers(500);
+      setUsers(data.users);
     } catch (e) {
       setError(e instanceof Error ? e.message : t('common.error'));
     } finally {

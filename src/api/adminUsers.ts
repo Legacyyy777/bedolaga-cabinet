@@ -403,6 +403,14 @@ export const adminUsersApi = {
     return response.data;
   },
 
+  // List users who have at least one referral (for referral tree)
+  getReferrers: async (limit = 500): Promise<UsersListResponse> => {
+    const response = await apiClient.get('/cabinet/admin/users/referrers', {
+      params: { limit },
+    });
+    return response.data;
+  },
+
   // Get users stats
   getStats: async (): Promise<UsersStatsResponse> => {
     const response = await apiClient.get('/cabinet/admin/users/stats');
