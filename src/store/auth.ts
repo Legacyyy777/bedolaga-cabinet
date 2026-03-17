@@ -45,6 +45,7 @@ interface AuthState {
     state: string,
     deviceId?: string | null,
   ) => Promise<void>;
+  loginWithDeepLink: (token: string) => Promise<void>;
   registerWithEmail: (
     email: string,
     password: string,
@@ -307,6 +308,19 @@ export const useAuthStore = create<AuthState>()(
           campaignSlug,
           referralCode,
         );
+        tokenStorage.setTokens(response.access_token, response.refresh_token);
+        set({
+          accessToken: response.access_token,
+          refreshToken: response.refresh_token,
+          user: response.user,
+          isAuthenticated: true,
+          pendingCampaignBonus: response.campaign_bonus || null,
+        });
+        await get().checkAdminStatus();
+      },
+
+      loginWithDeepLink: async (token) => {
+        const response = await authApi.pollDeepLinkToken(token);
         tokenStorage.setTokens(response.access_token, response.refresh_token);
         set({
           accessToken: response.access_token,

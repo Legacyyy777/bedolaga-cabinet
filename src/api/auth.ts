@@ -277,6 +277,24 @@ export const authApi = {
     return response.data;
   },
 
+  requestDeepLinkToken: async (): Promise<{
+    token: string;
+    bot_username: string;
+    expires_in: number;
+  }> => {
+    const response = await apiClient.post<{
+      token: string;
+      bot_username: string;
+      expires_in: number;
+    }>('/cabinet/auth/deeplink/request');
+    return response.data;
+  },
+
+  pollDeepLinkToken: async (token: string): Promise<AuthResponse> => {
+    const response = await apiClient.post<AuthResponse>('/cabinet/auth/deeplink/poll', { token });
+    return response.data;
+  },
+
   getMergePreview: async (mergeToken: string): Promise<MergePreviewResponse> => {
     const response = await apiClient.get<MergePreviewResponse>(
       `/cabinet/auth/merge/${encodeURIComponent(mergeToken)}`,
