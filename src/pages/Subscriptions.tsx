@@ -13,15 +13,15 @@ function EmptyState({ onBuy }: { onBuy: () => void }) {
 
   return (
     <div
-      className="rounded-2xl border p-8 text-center"
+      className="rounded-2xl border p-10 text-center"
       style={{ background: g.cardBg, borderColor: g.cardBorder }}
     >
       <div
-        className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl"
+        className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl"
         style={{ background: g.innerBg }}
       >
         <svg
-          className="h-7 w-7 opacity-40"
+          className="h-8 w-8 opacity-40"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -34,15 +34,15 @@ function EmptyState({ onBuy }: { onBuy: () => void }) {
           />
         </svg>
       </div>
-      <h3 className="mb-1 text-lg font-semibold" style={{ color: g.text }}>
+      <h3 className="mb-2 text-xl font-semibold" style={{ color: g.text }}>
         {t('subscriptions.empty', 'Нет подписок')}
       </h3>
-      <p className="mb-5 text-sm" style={{ color: g.textSecondary }}>
+      <p className="mb-6 text-sm" style={{ color: g.textSecondary }}>
         {t('subscriptions.emptyDesc', 'У вас пока нет активных подписок')}
       </p>
       <button
         onClick={onBuy}
-        className="rounded-xl bg-accent-500 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-600"
+        className="rounded-xl bg-accent-500 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-600"
       >
         {t('subscriptions.buy', 'Купить подписку')}
       </button>
@@ -73,52 +73,65 @@ export default function Subscriptions() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-4 p-4">
-      <h1 className="text-2xl font-bold" style={{ color: g.text }}>
-        {t('subscriptions.title', 'Мои подписки')}
-      </h1>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold" style={{ color: g.text }}>
+          {t('subscriptions.title', 'Мои подписки')}
+        </h1>
+        {!isLoading && subscriptions.length > 0 && (
+          <button
+            onClick={() => navigate('/subscription/purchase')}
+            className="flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium transition-colors"
+            style={{
+              background: 'rgba(var(--color-accent-400), 0.1)',
+              color: 'rgb(var(--color-accent-400))',
+              border: '1px solid rgba(var(--color-accent-400), 0.2)',
+            }}
+          >
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            {t('subscriptions.buyAnother', 'Новый тариф')}
+          </button>
+        )}
+      </div>
 
+      {/* Loading */}
       {isLoading && (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {[1, 2].map((i) => (
             <div
               key={i}
-              className="h-28 animate-pulse rounded-2xl"
+              className="h-36 animate-pulse rounded-2xl"
               style={{ background: g.innerBg }}
             />
           ))}
         </div>
       )}
 
+      {/* Empty state */}
       {!isLoading && subscriptions.length === 0 && (
         <EmptyState onBuy={() => navigate('/subscription/purchase')} />
       )}
 
-      {subscriptions.map((sub) => (
-        <SubscriptionListCard
-          key={sub.id}
-          subscription={sub}
-          onClick={() => navigate(`/subscriptions/${sub.id}`)}
-        />
-      ))}
-
-      {!isLoading && subscriptions.length > 0 && (
-        <button
-          onClick={() => navigate('/subscription/purchase')}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed p-4 text-sm transition-all hover:border-accent-400/30 hover:opacity-80"
-          style={{ borderColor: g.cardBorder, color: g.textSecondary }}
-        >
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          {t('subscriptions.buyAnother', 'Купить ещё тариф')}
-        </button>
+      {/* Subscription grid */}
+      {subscriptions.length > 0 && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {subscriptions.map((sub) => (
+            <SubscriptionListCard
+              key={sub.id}
+              subscription={sub}
+              onClick={() => navigate(`/subscriptions/${sub.id}`)}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
