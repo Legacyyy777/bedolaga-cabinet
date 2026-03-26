@@ -1311,6 +1311,7 @@
         "fullscreen": "Fullscreen"
       },
       "scope": {
+        "allUsers": "All users",
         "title": "Scope",
         "campaign": "Campaign",
         "partner": "Partner",
