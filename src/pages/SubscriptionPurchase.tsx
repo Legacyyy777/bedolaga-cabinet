@@ -45,7 +45,12 @@ export default function SubscriptionPurchase() {
   const subscription = subscriptionResponse?.subscription ?? null;
 
   // Purchase options
-  const { data: purchaseOptions, isLoading: optionsLoading } = useQuery({
+  const {
+    data: purchaseOptions,
+    isLoading: optionsLoading,
+    isError: optionsError,
+    refetch: refetchOptions,
+  } = useQuery({
     queryKey: ['purchase-options'],
     queryFn: subscriptionApi.getPurchaseOptions,
     staleTime: 0,
@@ -362,6 +367,58 @@ export default function SubscriptionPurchase() {
     );
   }
 
+  if (optionsError || (!purchaseOptions && !optionsLoading)) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/subscription')}
+            aria-label="Back"
+            className="flex h-9 w-9 items-center justify-center rounded-xl transition-colors"
+            style={{
+              background: g.innerBg,
+              border: `1px solid ${g.innerBorder}`,
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-dark-50/60"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h1 className="text-2xl font-bold text-dark-50 sm:text-3xl">
+            {t('subscription.extend')}
+          </h1>
+        </div>
+        <div
+          className="rounded-3xl p-6 text-center"
+          style={{
+            background: g.cardBg,
+            border: `1px solid ${g.cardBorder}`,
+          }}
+        >
+          <p className="mb-4 text-dark-300">
+            {t('subscription.loadError', 'Не удалось загрузить варианты подписки')}
+          </p>
+          <button
+            onClick={() => refetchOptions()}
+            className="rounded-xl bg-accent-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-600"
+          >
+            {t('common.retry')}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header with back link */}
@@ -409,48 +466,54 @@ export default function SubscriptionPurchase() {
             padding: '24px 28px',
           }}
         >
-          {/* Trial upgrade prompt */}
-          {subscription?.is_trial && (
-            <div
-              className="mb-6 rounded-[14px] p-4"
-              style={{
-                background:
-                  'linear-gradient(135deg, rgba(255,184,0,0.08), rgba(var(--color-accent-400),0.06))',
-                border: '1px solid rgba(255,184,0,0.15)',
-              }}
-            >
-              <div className="flex items-start gap-3">
-                <div
-                  className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
-                  style={{ background: 'rgba(255,184,0,0.12)' }}
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#FFB800"
-                    strokeWidth="1.5"
-                    aria-hidden="true"
+          {/* Trial upgrade prompt — hidden when expired banner is active */}
+          {subscription?.is_trial &&
+            !(
+              isTariffsMode &&
+              purchaseOptions &&
+              'subscription_is_expired' in purchaseOptions &&
+              purchaseOptions.subscription_is_expired
+            ) && (
+              <div
+                className="mb-6 rounded-[14px] p-4"
+                style={{
+                  background:
+                    'linear-gradient(135deg, rgba(255,184,0,0.08), rgba(var(--color-accent-400),0.06))',
+                  border: '1px solid rgba(255,184,0,0.15)',
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]"
+                    style={{ background: 'rgba(255,184,0,0.12)' }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <div className="text-sm font-semibold" style={{ color: '#FFB800' }}>
-                    {t('subscription.trialUpgrade.title')}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#FFB800"
+                      strokeWidth="1.5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
+                      />
+                    </svg>
                   </div>
-                  <div className="mt-1 text-[12px] text-dark-50/40">
-                    {t('subscription.trialUpgrade.description')}
+                  <div>
+                    <div className="text-sm font-semibold" style={{ color: '#FFB800' }}>
+                      {t('subscription.trialUpgrade.title')}
+                    </div>
+                    <div className="mt-1 text-[12px] text-dark-50/40">
+                      {t('subscription.trialUpgrade.description')}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Expired subscription notice */}
           {isTariffsMode &&
@@ -1930,6 +1993,30 @@ export default function SubscriptionPurchase() {
           )}
         </div>
       )}
+
+      {/* No options available fallback */}
+      {purchaseOptions &&
+        !optionsLoading &&
+        !(isTariffsMode && tariffs.length > 0) &&
+        !(classicOptions && classicOptions.periods.length > 0) && (
+          <div
+            className="rounded-3xl p-6 text-center"
+            style={{
+              background: g.cardBg,
+              border: `1px solid ${g.cardBorder}`,
+            }}
+          >
+            <p className="mb-4 text-dark-300">
+              {t('subscription.noOptionsAvailable', 'Нет доступных вариантов подписки')}
+            </p>
+            <button
+              onClick={() => refetchOptions()}
+              className="rounded-xl bg-accent-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-600"
+            >
+              {t('common.retry')}
+            </button>
+          </div>
+        )}
     </div>
   );
 }

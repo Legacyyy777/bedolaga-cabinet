@@ -474,7 +474,7 @@ export interface TicketDetail extends Omit<Ticket, 'messages_count' | 'last_mess
 
 export interface SupportConfig {
   tickets_enabled: boolean;
-  support_type: 'tickets' | 'profile' | 'url';
+  support_type: 'tickets' | 'profile' | 'url' | 'both';
   support_url?: string | null;
   support_username?: string | null;
 }
@@ -567,6 +567,7 @@ export interface PendingPayment {
   user_id?: number;
   user_telegram_id?: number;
   user_username?: string | null;
+  user_email?: string | null;
 }
 
 export interface ManualCheckResponse {

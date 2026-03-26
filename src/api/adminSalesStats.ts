@@ -12,6 +12,7 @@ export interface SalesStatsParams {
 
 export interface SalesSummary {
   total_revenue_kopeks: number;
+  manual_topup_kopeks: number;
   active_subscriptions: number;
   active_trials: number;
   new_trials: number;

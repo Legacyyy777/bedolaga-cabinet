@@ -14,6 +14,7 @@ import { useCurrency } from '../hooks/useCurrency';
 import { useCloseOnSuccessNotification } from '../store/successNotification';
 import PurchaseCTAButton from '../components/subscription/PurchaseCTAButton';
 import { CopyIcon, CheckIcon } from '../components/icons';
+import { useHaptic } from '../platform';
 import {
   getErrorMessage,
   getInsufficientBalanceError,
@@ -169,6 +170,7 @@ export default function Subscription() {
   const navigate = useNavigate();
   const { isDark } = useTheme();
   const g = getGlassColors(isDark);
+  const haptic = useHaptic();
   const [copied, setCopied] = useState(false);
 
   // Helper to format price from kopeks
@@ -444,6 +446,8 @@ export default function Subscription() {
           const isUnlimited =
             (trafficData?.is_unlimited ?? false) || subscription.traffic_limit_gb === 0;
           const connectedDevices = devicesData?.total ?? 0;
+          const isAtDeviceLimit =
+            subscription.device_limit > 0 && connectedDevices >= subscription.device_limit;
 
           return (
             <div
@@ -726,8 +730,15 @@ export default function Subscription() {
                 <HoverBorderGradient
                   as="button"
                   accentColor={zone.mainHex}
-                  onClick={() => navigate('/connection')}
-                  className="mb-5 flex w-full items-center gap-3.5 rounded-[14px] p-3.5 text-left transition-shadow duration-300"
+                  disabled={isAtDeviceLimit}
+                  onClick={() => {
+                    if (isAtDeviceLimit) {
+                      haptic.notification('error');
+                      return;
+                    }
+                    navigate('/connection');
+                  }}
+                  className={`mb-5 flex w-full items-center gap-3.5 rounded-[14px] p-3.5 text-left transition-shadow duration-300${isAtDeviceLimit ? 'cursor-not-allowed opacity-50' : ''}`}
                   style={{ fontFamily: 'inherit' }}
                 >
                   <div
@@ -762,6 +773,14 @@ export default function Subscription() {
                             max: subscription.device_limit,
                           })}
                     </div>
+                    {isAtDeviceLimit && (
+                      <div
+                        className="mt-1 text-[10px] font-medium"
+                        style={{ color: 'rgb(var(--color-warning-400))' }}
+                      >
+                        {t('dashboard.deviceLimitReached')}
+                      </div>
+                    )}
                   </div>
                   {subscription.device_limit === 0 ? (
                     <div
@@ -2105,7 +2124,12 @@ export default function Subscription() {
                       <div className="text-sm font-semibold text-dark-50">
                         {device.device_model || device.platform}
                       </div>
-                      <div className="text-[11px] text-dark-50/30">{device.platform}</div>
+                      <div className="flex items-center gap-1.5 text-[11px] text-dark-50/30">
+                        <span>{device.platform}</span>
+                        <span className="font-mono text-dark-50/20">
+                          {device.hwid.slice(0, 8).toUpperCase()}
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <button

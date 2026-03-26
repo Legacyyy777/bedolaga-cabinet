@@ -545,7 +545,8 @@ export default function Wheel() {
             <div className="mt-8 space-y-4">
               {/* Payment type selector */}
               {(starsEnabled || daysEnabled) && (
-                <div className="rounded-xl border border-dark-700/30 bg-dark-800/30 p-1">
+                <div className="rounded-xl border border-dark-700/30 bg-dark-800/30 px-1 pb-1 pt-2">
+                  <p className="mb-1 text-center text-xs text-dark-400">{t('wheel.spinCost')}</p>
                   <div
                     className={`grid gap-1 ${bothMethodsAvailable ? 'grid-cols-2' : 'grid-cols-1'}`}
                   >

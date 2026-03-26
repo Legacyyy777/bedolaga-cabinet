@@ -114,8 +114,10 @@ export function DualAreaChart({
               border: `1px solid ${colors.tooltipBorder}`,
               borderRadius: SALES_STATS.TOOLTIP.BORDER_RADIUS,
               fontSize: SALES_STATS.TOOLTIP.FONT_SIZE,
+              color: colors.label,
             }}
             labelStyle={{ color: colors.label }}
+            itemStyle={{ color: colors.label }}
             formatter={(value: number | undefined, name: string | undefined) => {
               const displayValue = value ?? 0;
               if (name === 'series1') return [displayValue, series1Label];

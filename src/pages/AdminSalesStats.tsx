@@ -82,7 +82,7 @@ export default function AdminSalesStats() {
           {t('admin.salesStats.loadError')}
         </div>
       )}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8">
         <StatCard
           label={t('admin.salesStats.summary.revenue')}
           value={
@@ -128,6 +128,15 @@ export default function AdminSalesStats() {
                 )
           }
           valueClassName="text-accent-400"
+        />
+        <StatCard
+          label={t('admin.salesStats.summary.manualTopup')}
+          value={
+            summaryLoading
+              ? '...'
+              : formatWithCurrency((summary?.manual_topup_kopeks ?? 0) / SALES_STATS.KOPEKS_DIVISOR)
+          }
+          valueClassName="text-warning-400"
         />
       </div>
 

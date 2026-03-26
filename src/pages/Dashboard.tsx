@@ -10,11 +10,13 @@ import { balanceApi } from '../api/balance';
 import { wheelApi } from '../api/wheel';
 import Onboarding, { useOnboarding } from '../components/Onboarding';
 import PromoOffersSection from '../components/PromoOffersSection';
+import NewsSection from '../components/news/NewsSection';
 import SubscriptionCardActive from '../components/dashboard/SubscriptionCardActive';
 import SubscriptionCardExpired from '../components/dashboard/SubscriptionCardExpired';
 import TrialOfferCard from '../components/dashboard/TrialOfferCard';
 import StatsGrid from '../components/dashboard/StatsGrid';
 import { giftApi } from '../api/gift';
+import { promoApi } from '../api/promo';
 import PendingGiftCard from '../components/dashboard/PendingGiftCard';
 import { API } from '../config/constants';
 
@@ -86,6 +88,13 @@ export default function Dashboard() {
     queryKey: ['pending-gifts'],
     queryFn: giftApi.getPendingGifts,
     staleTime: 30_000,
+    retry: false,
+  });
+
+  const { data: promoGroupData } = useQuery({
+    queryKey: ['promo-group-discounts'],
+    queryFn: promoApi.getGroupDiscounts,
+    staleTime: 60_000,
     retry: false,
   });
 
@@ -227,7 +236,31 @@ export default function Dashboard() {
         <h1 className="text-2xl font-bold text-dark-50 sm:text-3xl">
           {t('dashboard.welcome', { name: user?.first_name || user?.username || '' })}
         </h1>
-        <p className="mt-1 text-dark-400">{t('dashboard.yourSubscription')}</p>
+        <div className="mt-1 flex flex-wrap items-center gap-2">
+          <p className="text-dark-400">{t('dashboard.yourSubscription')}</p>
+          {promoGroupData?.group_name && (
+            <span
+              className="inline-flex max-w-[160px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+              style={{
+                background: 'rgba(var(--color-accent-400), 0.1)',
+                border: '1px solid rgba(var(--color-accent-400), 0.2)',
+                color: 'rgb(var(--color-accent-400))',
+              }}
+            >
+              <svg
+                className="shrink-0"
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <span className="truncate">{promoGroupData.group_name}</span>
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Pending Gift Activations */}
@@ -302,6 +335,9 @@ export default function Dashboard() {
           </div>
         </Link>
       )}
+
+      {/* News Section */}
+      <NewsSection />
 
       {/* Onboarding Tutorial */}
       {showOnboarding && (

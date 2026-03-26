@@ -25,6 +25,8 @@ const isLinkableProvider = (provider: string): boolean =>
 // SessionStorage key for Telegram link CSRF state
 export const LINK_TELEGRAM_STATE_KEY = 'link_telegram_state';
 
+const LINK_SCRIPT_LOAD_TIMEOUT_MS = 8000;
+
 /** Telegram account linking widget (browser only). Supports OIDC popup and legacy widget. */
 function TelegramLinkWidget() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,7 @@ function TelegramLinkWidget() {
   const queryClient = useQueryClient();
   const [oidcLoading, setOidcLoading] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptFailed, setScriptFailed] = useState(false);
   const mountedRef = useRef(true);
 
   const { data: widgetConfig } = useQuery<TelegramWidgetConfig>({
@@ -65,6 +68,12 @@ function TelegramLinkWidget() {
     [navigate, queryClient, showToast, t],
   );
 
+  // Handle script load failure (timeout or error)
+  const handleScriptFailed = useCallback(() => {
+    if (!mountedRef.current || scriptLoaded) return;
+    setScriptFailed(true);
+  }, [scriptLoaded]);
+
   // OIDC callback handler (ref pattern to avoid stale closures)
   const handleOIDCCallbackRef =
     useRef<(data: { id_token?: string; error?: string }) => void>(undefined);
@@ -95,7 +104,7 @@ function TelegramLinkWidget() {
     }
   };
 
-  // Load OIDC script and init
+  // Load OIDC script and init with timeout
   useEffect(() => {
     if (!isOIDC || !widgetConfig?.oidc_client_id) return;
 
@@ -116,24 +125,43 @@ function TelegramLinkWidget() {
       }
     };
 
+    const timeoutId = setTimeout(() => {
+      if (!scriptLoaded) {
+        handleScriptFailed();
+      }
+    }, LINK_SCRIPT_LOAD_TIMEOUT_MS);
+
     if (!script) {
       script = document.createElement('script');
       script.id = scriptId;
       script.src = 'https://oauth.telegram.org/js/telegram-login.js?3';
       script.async = true;
-      script.onload = () => initTelegramLogin();
+      script.onload = () => {
+        clearTimeout(timeoutId);
+        initTelegramLogin();
+      };
       script.onerror = () => {
-        if (mountedRef.current) {
-          showToast({ type: 'error', message: t('profile.accounts.linkError') });
-        }
+        clearTimeout(timeoutId);
+        handleScriptFailed();
       };
       document.head.appendChild(script);
     } else {
+      clearTimeout(timeoutId);
       initTelegramLogin();
     }
-  }, [isOIDC, widgetConfig?.oidc_client_id, widgetConfig?.request_access, showToast, t]);
 
-  // Legacy widget effect (only when NOT OIDC)
+    return () => clearTimeout(timeoutId);
+  }, [
+    isOIDC,
+    widgetConfig?.oidc_client_id,
+    widgetConfig?.request_access,
+    showToast,
+    t,
+    scriptLoaded,
+    handleScriptFailed,
+  ]);
+
+  // Legacy widget effect (only when NOT OIDC) with timeout
   useEffect(() => {
     if (isOIDC || !containerRef.current || !botUsername) return;
 
@@ -177,18 +205,56 @@ function TelegramLinkWidget() {
     script.setAttribute('data-request-access', 'write');
     script.async = true;
 
+    const timeoutId = setTimeout(() => {
+      if (container && !container.querySelector('iframe')) {
+        handleScriptFailed();
+      }
+    }, LINK_SCRIPT_LOAD_TIMEOUT_MS);
+
+    script.onerror = () => {
+      clearTimeout(timeoutId);
+      handleScriptFailed();
+    };
+
     container.appendChild(script);
 
     return () => {
+      clearTimeout(timeoutId);
       delete (window as unknown as Record<string, unknown>)[callbackName];
       while (container.firstChild) {
         container.removeChild(container.firstChild);
       }
     };
-  }, [isOIDC, botUsername, navigate, showToast, t, queryClient, handleLinkResult]);
+  }, [
+    isOIDC,
+    botUsername,
+    navigate,
+    showToast,
+    t,
+    queryClient,
+    handleLinkResult,
+    handleScriptFailed,
+  ]);
 
   if (!botUsername && !isOIDC) {
     return null;
+  }
+
+  // Script failed to load - show unavailable message with bot link
+  if (scriptFailed) {
+    return (
+      <div className="flex flex-col items-center gap-1.5">
+        <p className="text-xs text-dark-400">{t('profile.accounts.telegramLinkUnavailable')}</p>
+        <a
+          href={`https://t.me/${botUsername}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-accent-400 transition-colors hover:text-accent-300"
+        >
+          @{botUsername}
+        </a>
+      </div>
+    );
   }
 
   if (isOIDC) {

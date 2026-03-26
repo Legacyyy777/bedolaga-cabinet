@@ -175,7 +175,14 @@
     "authenticating": "Authenticating...",
     "orOpenInApp": "Or open the bot in the app",
     "loginFailed": "Login Failed",
+    "telegramWidgetBlocked": "Telegram login widget is unavailable. Use the bot to sign in:",
+    "openBotToLogin": "Open bot to sign in",
+    "waitingForConfirmation": "Waiting for confirmation...",
+    "deepLinkExpired": "Link expired. Please try again.",
     "tryAgain": "Try Again",
+    "scanQrToLogin": "Scan QR code with your phone camera",
+    "orSendCommand": "Or send the bot this command:",
+    "commandCopied": "Command copied",
     "welcomeBack": "Welcome back!",
     "loginTitle": "Login to Cabinet",
     "loginSubtitle": "Sign in with Telegram or use your email",
@@ -250,6 +257,7 @@
     "daysRemaining": "Days left",
     "usageLast14Days": "Usage last 14 days",
     "maxUsage": "max {{amount}}",
+    "deviceLimitReached": "Disconnect devices to add new ones",
     "expired": {
       "title": "Subscription Expired",
       "trialTitle": "Trial Expired",
@@ -630,6 +638,15 @@
       },
       "tribute": {
         "description": "Pay with bank card via Tribute"
+      },
+      "severpay": {
+        "description": "Pay via SeverPay"
+      },
+      "riopay": {
+        "description": "Pay via RioPay"
+      },
+      "kassa_ai": {
+        "description": "Pay via Kassa AI"
       }
     },
     "transactionHistory": "Transaction History",
@@ -923,6 +940,7 @@
     "days_other": "{{count}} days",
     "subscriptionDays": "Subscription days",
     "day": "Day",
+    "spinCost": "Spin cost",
     "spin": "SPIN!",
     "spinning": "Spinning...",
     "history": "History",
@@ -1091,7 +1109,9 @@
       "policies": "Access Policies",
       "auditLog": "Audit Log",
       "salesStats": "Sales Statistics",
-      "landings": "Landings"
+      "landings": "Landings",
+      "referralNetwork": "Referral Network",
+      "news": "News"
     },
     "panel": {
       "title": "Admin Panel",
@@ -1125,7 +1145,9 @@
       "policiesDesc": "Configure ABAC access policies",
       "auditLogDesc": "Review system activity and access history",
       "salesStatsDesc": "Sales analytics and trends",
-      "landingsDesc": "Quick purchase landing pages"
+      "landingsDesc": "Quick purchase landing pages",
+      "referralNetworkDesc": "Referral graph and campaign visualization",
+      "newsDesc": "Manage news articles and publications"
     },
     "salesStats": {
       "title": "Sales Statistics",
@@ -1151,7 +1173,8 @@
         "newTrials": "New Trials",
         "conversion": "Conversion",
         "renewals": "Renewals",
-        "addonRevenue": "Add-on Revenue"
+        "addonRevenue": "Add-on Revenue",
+        "manualTopup": "Manual Top-ups"
       },
       "trials": {
         "total": "Total Trials",
@@ -1205,6 +1228,111 @@
         "revenue": "Revenue"
       },
       "loadError": "Failed to load statistics"
+    },
+    "referralNetwork": {
+      "title": "Referral Network",
+      "subtitle": "Referral graph and advertising campaign visualization",
+      "search": {
+        "placeholder": "Search by TG ID, @username, email, campaign...",
+        "noResults": "Nothing found",
+        "resultsCount": "Found: {{count}}",
+        "clear": "Clear search"
+      },
+      "filters": {
+        "title": "Filters",
+        "campaigns": "Campaigns",
+        "partnersOnly": "Partners only",
+        "minReferrals": "Min referrals",
+        "reset": "Reset"
+      },
+      "stats": {
+        "totalUsers": "Users",
+        "totalReferrers": "Referrers",
+        "totalCampaigns": "Campaigns",
+        "subscriptionRevenue": "Subscription revenue",
+        "totalEarnings": "Ref. earnings"
+      },
+      "legend": {
+        "title": "Legend",
+        "fillTitle": "Subscription",
+        "borderTitle": "Referral role",
+        "regularUser": "No subscription",
+        "activeReferrer": "Active referrer",
+        "partner": "Partner",
+        "topReferrer": "Top referrer (10+)",
+        "campaignUser": "From campaign",
+        "partnerCampaignEdge": "Partner → Campaign",
+        "campaignNode": "Ad campaign",
+        "paidActive": "Paid subscription",
+        "trialActive": "Trial",
+        "paidExpired": "Paid expired",
+        "trialExpired": "Trial expired"
+      },
+      "user": {
+        "tgId": "TG ID",
+        "email": "Email",
+        "partner": "Partner",
+        "subscription": "Subscription",
+        "validUntil": "until {{date}}",
+        "noSubscription": "No subscription",
+        "personalStats": "Personal statistics",
+        "totalSpent": "Total spent",
+        "referralEarnings": "Referral earnings",
+        "referralBranch": "Referral branch",
+        "directReferrals": "Direct referrals",
+        "branchSize": "Total in branch",
+        "branchRevenue": "Branch revenue",
+        "source": "Source",
+        "referredBy": "Referred by",
+        "fromCampaign": "Campaign",
+        "organic": "Organic",
+        "subscriptionStatus": {
+          "trial_active": "Trial",
+          "paid_active": "Paid",
+          "trial_expired": "Trial expired",
+          "paid_expired": "Paid expired"
+        }
+      },
+      "campaign": {
+        "startParam": "Parameter",
+        "active": "Active",
+        "inactive": "Inactive",
+        "directUsers": "Direct",
+        "totalNetwork": "Total network",
+        "totalRevenue": "Total revenue",
+        "conversionRate": "Conversion",
+        "avgCheck": "Avg check",
+        "topReferrers": "Top referrers from campaign"
+      },
+      "controls": {
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "resetZoom": "Reset zoom",
+        "fullscreen": "Fullscreen"
+      },
+      "scope": {
+        "title": "Scope",
+        "campaign": "Campaign",
+        "partner": "Partner",
+        "user": "User",
+        "searchPlaceholder": "Search...",
+        "selectCampaign": "Select campaign",
+        "selectPartner": "Select partner",
+        "selectUser": "Search user",
+        "emptyState": "Select a campaign, partner, or user to view their network",
+        "users": "users",
+        "campaigns": "campaigns",
+        "active": "Active",
+        "inactive": "Inactive",
+        "noResults": "Nothing found",
+        "removeItem": "Remove {{label}}",
+        "clearAll": "Clear all selections",
+        "addScope": "Add scope",
+        "maxReached": "Maximum {{max}} items"
+      },
+      "loading": "Loading graph...",
+      "error": "Failed to load network data",
+      "empty": "No data to display"
     },
     "trafficUsage": {
       "title": "Traffic Usage",
@@ -1271,18 +1399,40 @@
       "previewNotAvailable": "Preview not available"
     },
     "payments": {
-      "title": "Payment verification",
-      "description": "Pending payments in the last 24 hours",
+      "title": "Payments",
+      "description": "Search and manage payments",
+      "searchPlaceholder": "Search: invoice, TG ID, @username, email...",
+      "searchHint": "Examples: SP-78291, @username, 123456789, user@mail.ru",
+      "searchResults": "Results for: {{query}} — found {{count}}",
+      "resetSearch": "Reset",
+      "statusAll": "All",
+      "statusPending": "Pending",
+      "statusPaid": "Paid",
+      "statusCancelled": "Cancelled",
+      "period24h": "24h",
+      "period7d": "7d",
+      "period30d": "30d",
+      "periodAll": "All",
+      "periodCustom": "Range",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "applyDate": "Apply",
+      "allMethods": "All methods",
+      "totalCount": "Total",
+      "pendingCount": "Pending",
+      "paidCount": "Paid",
+      "cancelledCount": "Cancelled",
       "totalPending": "Total pending",
       "filterByMethod": "Filter by method",
-      "noPayments": "No pending payments",
+      "noPayments": "No payments found",
       "paid": "Paid",
       "user": "User",
       "openLink": "Open link",
       "checkStatus": "Check status",
       "checking": "Checking...",
-      "prev": "Previous",
-      "next": "Next"
+      "prev": "Prev",
+      "next": "Next",
+      "checkError": "Status check failed"
     },
     "paymentMethods": {
       "title": "Payment Methods",
@@ -1569,7 +1719,14 @@
       "enableEmail": "Email",
       "sendingBoth": "2 broadcasts will be created",
       "bothCreated": "Broadcasts created",
-      "atLeastOneChannel": "Select at least one channel"
+      "atLeastOneChannel": "Select at least one channel",
+      "customButtons": "Custom buttons",
+      "addCustomButton": "Add button",
+      "customButtonLabelPlaceholder": "Button text",
+      "customButtonTypeCallback": "Callback",
+      "customButtonTypeUrl": "URL",
+      "customButtonCallbackPlaceholder": "callback_data (e.g. back_to_menu)",
+      "customButtonUrlPlaceholder": "https://example.com"
     },
     "pinnedMessages": {
       "title": "Pinned Messages",
@@ -1879,6 +2036,12 @@
       "adminLabel": "Admin",
       "replyPlaceholder": "Type your reply...",
       "sendReply": "Send Reply",
+      "attachMedia": "Attach media",
+      "invalidFileType": "Invalid file type. Use images, videos (MP4, WebM) or documents (PDF, DOC, TXT, ZIP).",
+      "fileTooLarge": "File is too large. Maximum size is 10MB.",
+      "uploadFailed": "Failed to upload file",
+      "uploading": "Uploading...",
+      "uploadComplete": "Uploaded",
       "settings": "Settings",
       "settingsSubtitle": "Configure ticket system and SLA",
       "settingsLoadError": "Failed to load settings",
@@ -3079,6 +3242,7 @@
       "system": "System",
       "permanent": "Permanent",
       "expired": "expired",
+      "envManaged": "Managed via ADMIN_IDS / ADMIN_EMAILS in env",
       "revoke": "Revoke",
       "revokeAriaLabel": "Revoke role {{role}} from {{user}}",
       "table": {
@@ -3864,6 +4028,7 @@
       "linkSuccess": "Account connected successfully",
       "unlinkSuccess": "Account disconnected successfully",
       "linkError": "Failed to connect account",
+      "telegramLinkUnavailable": "Telegram linking is temporarily unavailable. Use the bot:",
       "unlinkError": "Failed to disconnect account",
       "goToAccounts": "Connected Accounts",
       "linking": "Linking account...",
@@ -4310,5 +4475,76 @@
     "shareModalActivateViaCabinet": "Or via website:",
     "copyMessage": "Copy message",
     "shareToastCopied": "Message copied"
+  },
+  "news": {
+    "title": "News & Updates",
+    "filterAll": "All",
+    "readMore": "Read more",
+    "readTime": "min read",
+    "loadMore": "Load more",
+    "noNews": "No news yet",
+    "backToHome": "Back",
+    "views": "views",
+    "admin": {
+      "title": "News Management",
+      "create": "Create Article",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Delete this article?",
+      "published": "Published",
+      "draft": "Draft",
+      "featured": "Featured",
+      "titleLabel": "Title",
+      "slugLabel": "URL Slug",
+      "categoryLabel": "Category",
+      "categoryColorLabel": "Category Color",
+      "tagLabel": "Tag",
+      "excerptLabel": "Short Description",
+      "contentLabel": "Content",
+      "imageLabel": "Featured Image",
+      "readTimeLabel": "Read Time (min)",
+      "save": "Save",
+      "saving": "Saving...",
+      "saveError": "Failed to save article. Please try again.",
+      "saved": "Article saved",
+      "deleted": "Article deleted",
+      "selectColor": "Select color {{color}}",
+      "uploading": "Uploading...",
+      "dropMedia": "Drop image or video here",
+      "uploadError": "Upload failed",
+      "fileTooLarge": "File is too large",
+      "uploadFeaturedImage": "Upload image",
+      "combobox": {
+        "selectCategory": "Select category",
+        "selectTag": "Select tag",
+        "create": "Create",
+        "createNew": "Create new",
+        "searchOrCreate": "Search or create...",
+        "noItems": "Nothing found",
+        "placeholder": "Select...",
+        "clear": "Clear",
+        "delete": "Delete {{name}}"
+      },
+      "toolbar": {
+        "bold": "Bold",
+        "italic": "Italic",
+        "underline": "Underline",
+        "strikethrough": "Strikethrough",
+        "heading1": "Heading 1",
+        "heading2": "Heading 2",
+        "heading3": "Heading 3",
+        "bulletList": "Bullet List",
+        "orderedList": "Ordered List",
+        "blockquote": "Blockquote",
+        "codeBlock": "Code Block",
+        "alignLeft": "Align Left",
+        "alignCenter": "Align Center",
+        "highlight": "Highlight",
+        "link": "Link",
+        "image": "Image",
+        "imageUrlPrompt": "Image URL:",
+        "linkUrlPrompt": "URL:"
+      }
+    }
   }
 }

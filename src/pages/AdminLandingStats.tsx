@@ -477,8 +477,10 @@ export default function AdminLandingStats() {
                       border: `1px solid ${colors.tooltipBorder}`,
                       borderRadius: CHART_COMMON.TOOLTIP.BORDER_RADIUS,
                       fontSize: CHART_COMMON.TOOLTIP.FONT_SIZE,
+                      color: colors.label,
                     }}
                     labelStyle={{ color: colors.label }}
+                    itemStyle={{ color: colors.label }}
                   />
                   <Area
                     yAxisId="left"
@@ -539,8 +541,10 @@ export default function AdminLandingStats() {
                       border: `1px solid ${colors.tooltipBorder}`,
                       borderRadius: CHART_COMMON.TOOLTIP.BORDER_RADIUS,
                       fontSize: CHART_COMMON.TOOLTIP.FONT_SIZE,
+                      color: colors.label,
                     }}
                     labelStyle={{ color: colors.label }}
+                    itemStyle={{ color: colors.label }}
                     formatter={(value: number | undefined) => {
                       return [value ?? 0, t('admin.landings.stats.purchases')];
                     }}
@@ -617,7 +621,9 @@ export default function AdminLandingStats() {
                         border: `1px solid ${colors.tooltipBorder}`,
                         borderRadius: CHART_COMMON.TOOLTIP.BORDER_RADIUS,
                         fontSize: CHART_COMMON.TOOLTIP.FONT_SIZE,
+                        color: colors.label,
                       }}
+                      itemStyle={{ color: colors.label }}
                     />
                   </PieChart>
                 </ResponsiveContainer>

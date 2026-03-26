@@ -111,8 +111,10 @@ export function DailyChart({ data, chartId, title, earningsLabel, countLabel }: 
               border: `1px solid ${colors.tooltipBorder}`,
               borderRadius: PARTNER_STATS.TOOLTIP.BORDER_RADIUS,
               fontSize: PARTNER_STATS.TOOLTIP.FONT_SIZE,
+              color: colors.label,
             }}
             labelStyle={{ color: colors.label }}
+            itemStyle={{ color: colors.label }}
             formatter={(value: number | undefined, name: string | undefined) => {
               const displayValue = value ?? 0;
               if (name === 'earnings_display') {

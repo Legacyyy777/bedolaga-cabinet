@@ -6,6 +6,14 @@ export interface PaymentsStats {
   by_method: Record<string, number>;
 }
 
+export interface SearchStats {
+  total: number;
+  pending: number;
+  paid: number;
+  cancelled: number;
+  by_method: Record<string, number>;
+}
+
 export const adminPaymentsApi = {
   // Get all pending payments (admin)
   getPendingPayments: async (params?: {
@@ -25,6 +33,39 @@ export const adminPaymentsApi = {
   // Get payments statistics
   getStats: async (): Promise<PaymentsStats> => {
     const response = await apiClient.get<PaymentsStats>('/cabinet/admin/payments/stats');
+    return response.data;
+  },
+
+  // Search payments with filters
+  searchPayments: async (params?: {
+    search?: string;
+    status_filter?: string;
+    method_filter?: string;
+    period?: string;
+    date_from?: string;
+    date_to?: string;
+    page?: number;
+    per_page?: number;
+  }): Promise<PaginatedResponse<PendingPayment>> => {
+    const response = await apiClient.get<PaginatedResponse<PendingPayment>>(
+      '/cabinet/admin/payments/search',
+      { params },
+    );
+    return response.data;
+  },
+
+  // Get search statistics with filters
+  getSearchStats: async (params?: {
+    search?: string;
+    status_filter?: string;
+    method_filter?: string;
+    period?: string;
+    date_from?: string;
+    date_to?: string;
+  }): Promise<SearchStats> => {
+    const response = await apiClient.get<SearchStats>('/cabinet/admin/payments/search/stats', {
+      params,
+    });
     return response.data;
   },
 

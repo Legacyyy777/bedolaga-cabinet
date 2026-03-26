@@ -107,6 +107,7 @@ export default function Profile() {
     staleTime: 60000,
   });
   const isEmailAuthEnabled = emailAuthConfig?.enabled ?? true;
+  const isEmailVerificationEnabled = emailAuthConfig?.verification_enabled ?? true;
 
   // Build referral link for cabinet
   const referralLink = referralInfo?.referral_code
@@ -474,13 +475,13 @@ export default function Profile() {
                     <span className="font-medium text-dark-100">{user.email}</span>
                     {user.email_verified ? (
                       <span className="badge-success">{t('profile.verified')}</span>
-                    ) : (
+                    ) : isEmailVerificationEnabled ? (
                       <span className="badge-warning">{t('profile.notVerified')}</span>
-                    )}
+                    ) : null}
                   </div>
                 </div>
 
-                {!user.email_verified && (
+                {!user.email_verified && isEmailVerificationEnabled && (
                   <div className="rounded-linear border border-warning-500/30 bg-warning-500/10 p-4">
                     <p className="mb-4 text-sm text-warning-400">
                       {t('profile.verificationRequired')}

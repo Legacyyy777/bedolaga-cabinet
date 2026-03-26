@@ -77,8 +77,10 @@ export function SimpleBarChart({
               border: `1px solid ${colors.tooltipBorder}`,
               borderRadius: SALES_STATS.TOOLTIP.BORDER_RADIUS,
               fontSize: SALES_STATS.TOOLTIP.FONT_SIZE,
+              color: colors.label,
             }}
             labelStyle={{ color: colors.label }}
+            itemStyle={{ color: colors.label }}
             formatter={(value: number | undefined) => [
               valueFormatter ? valueFormatter(value ?? 0) : (value ?? 0),
             ]}

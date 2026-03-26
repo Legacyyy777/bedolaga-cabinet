@@ -167,7 +167,14 @@
     "authenticating": "در حال تایید هویت...",
     "orOpenInApp": "یا ربات را در برنامه باز کنید",
     "loginFailed": "ورود ناموفق",
+    "telegramWidgetBlocked": "ویجت ورود تلگرام در دسترس نیست. از طریق ربات وارد شوید:",
+    "openBotToLogin": "باز کردن ربات برای ورود",
+    "waitingForConfirmation": "در انتظار تایید...",
+    "deepLinkExpired": "لینک منقضی شده است. لطفا دوباره تلاش کنید.",
     "tryAgain": "تلاش مجدد",
+    "scanQrToLogin": "کد QR را با دوربین گوشی اسکن کنید",
+    "orSendCommand": "یا این دستور را به ربات ارسال کنید:",
+    "commandCopied": "دستور کپی شد",
     "welcomeBack": "خوش آمدید!",
     "loginTitle": "ورود به کابین",
     "loginSubtitle": "با تلگرام یا ایمیل وارد شوید",
@@ -238,6 +245,7 @@
       "devices": "دستگاه‌ها",
       "expiredDate": "منقضی شده"
     },
+    "deviceLimitReached": "برای افزودن دستگاه جدید، دستگاه‌های فعلی را قطع کنید",
     "suspended": {
       "title": "اشتراک معلق شده",
       "resume": "از سرگیری"
@@ -483,6 +491,9 @@
       },
       "tribute": {
         "description": "پرداخت با کارت بانکی از طریق Tribute"
+      },
+      "severpay": {
+        "description": "پرداخت از طریق SeverPay"
       }
     },
     "transactionHistory": "تاریخچه تراکنش‌ها",
@@ -771,6 +782,7 @@
     "days_other": "{{count}} روز",
     "subscriptionDays": "روز اشتراک",
     "day": "روز",
+    "spinCost": "هزینه چرخش",
     "spin": "بچرخان!",
     "spinning": "در حال چرخش...",
     "history": "تاریخچه",
@@ -931,7 +943,9 @@
       "policies": "سیاست‌های دسترسی",
       "auditLog": "گزارش بازرسی",
       "salesStats": "آمار فروش",
-      "landings": "صفحات فرود"
+      "landings": "صفحات فرود",
+      "referralNetwork": "شبکه ارجاع",
+      "news": "اخبار"
     },
     "panel": {
       "title": "پنل مدیریت",
@@ -965,7 +979,9 @@
       "policiesDesc": "تنظیم سیاست‌های کنترل دسترسی ABAC",
       "auditLogDesc": "بررسی فعالیت سیستم و تاریخچه دسترسی",
       "salesStatsDesc": "تحلیل فروش و روندها",
-      "landingsDesc": "صفحات خرید سریع"
+      "landingsDesc": "صفحات خرید سریع",
+      "referralNetworkDesc": "نمایش بصری گراف ارجاعات و کمپین‌ها",
+      "newsDesc": "مدیریت مقالات خبری و انتشارات"
     },
     "salesStats": {
       "title": "آمار فروش",
@@ -991,7 +1007,8 @@
         "newTrials": "آزمایشی جدید",
         "conversion": "تبدیل",
         "renewals": "تمدید",
-        "addonRevenue": "درآمد خدمات اضافی"
+        "addonRevenue": "درآمد خدمات اضافی",
+        "manualTopup": "شارژ دستی"
       },
       "trials": {
         "total": "کل آزمایشی",
@@ -1045,6 +1062,111 @@
         "revenue": "درآمد"
       },
       "loadError": "بارگذاری آمار ناموفق بود"
+    },
+    "referralNetwork": {
+      "title": "شبکه ارجاع",
+      "subtitle": "نمایش بصری گراف ارجاعات و کمپین‌های تبلیغاتی",
+      "search": {
+        "placeholder": "جستجو بر اساس TG ID، @نام‌کاربری، ایمیل، کمپین...",
+        "noResults": "نتیجه‌ای یافت نشد",
+        "resultsCount": "یافت شد: {{count}}",
+        "clear": "پاک کردن جستجو"
+      },
+      "filters": {
+        "title": "فیلترها",
+        "campaigns": "کمپین‌ها",
+        "partnersOnly": "فقط شرکا",
+        "minReferrals": "حداقل ارجاعات",
+        "reset": "بازنشانی"
+      },
+      "stats": {
+        "totalUsers": "کاربران",
+        "totalReferrers": "ارجاع‌دهندگان",
+        "totalCampaigns": "کمپین‌ها",
+        "subscriptionRevenue": "درآمد اشتراک",
+        "totalEarnings": "درآمد ارجاع"
+      },
+      "legend": {
+        "title": "راهنما",
+        "fillTitle": "اشتراک",
+        "borderTitle": "نقش ارجاع‌دهنده",
+        "regularUser": "بدون اشتراک",
+        "activeReferrer": "ارجاع‌دهنده فعال",
+        "partner": "شریک",
+        "topReferrer": "ارجاع‌دهنده برتر (+۱۰)",
+        "campaignUser": "از کمپین",
+        "partnerCampaignEdge": "شریک → کمپین",
+        "campaignNode": "کمپین تبلیغاتی",
+        "paidActive": "اشتراک پرداختی",
+        "trialActive": "آزمایشی",
+        "paidExpired": "اشتراک پرداختی منقضی",
+        "trialExpired": "آزمایشی منقضی"
+      },
+      "user": {
+        "tgId": "شناسه TG",
+        "email": "ایمیل",
+        "partner": "شریک",
+        "subscription": "اشتراک",
+        "validUntil": "تا {{date}}",
+        "noSubscription": "بدون اشتراک",
+        "personalStats": "آمار شخصی",
+        "totalSpent": "مجموع پرداختی",
+        "referralEarnings": "درآمد ارجاع",
+        "referralBranch": "شاخه ارجاع",
+        "directReferrals": "ارجاعات مستقیم",
+        "branchSize": "کل شاخه",
+        "branchRevenue": "درآمد شاخه",
+        "source": "منبع",
+        "referredBy": "معرفی شده توسط",
+        "fromCampaign": "کمپین",
+        "organic": "طبیعی",
+        "subscriptionStatus": {
+          "trial_active": "آزمایشی",
+          "paid_active": "پرداختی",
+          "trial_expired": "آزمایشی منقضی",
+          "paid_expired": "پرداختی منقضی"
+        }
+      },
+      "campaign": {
+        "startParam": "پارامتر",
+        "active": "فعال",
+        "inactive": "غیرفعال",
+        "directUsers": "مستقیم",
+        "totalNetwork": "کل شبکه",
+        "totalRevenue": "درآمد کل",
+        "conversionRate": "نرخ تبدیل",
+        "avgCheck": "میانگین مبلغ",
+        "topReferrers": "ارجاع‌دهندگان برتر کمپین"
+      },
+      "controls": {
+        "zoomIn": "بزرگ‌نمایی",
+        "zoomOut": "کوچک‌نمایی",
+        "resetZoom": "بازنشانی زوم",
+        "fullscreen": "تمام‌صفحه"
+      },
+      "scope": {
+        "title": "محدوده",
+        "campaign": "کمپین",
+        "partner": "شریک",
+        "user": "کاربر",
+        "searchPlaceholder": "جستجو...",
+        "selectCampaign": "انتخاب کمپین",
+        "selectPartner": "انتخاب شریک",
+        "selectUser": "جستجوی کاربر",
+        "emptyState": "یک کمپین، شریک یا کاربر را برای مشاهده شبکه انتخاب کنید",
+        "users": "کاربران",
+        "campaigns": "کمپین‌ها",
+        "active": "فعال",
+        "inactive": "غیرفعال",
+        "noResults": "نتیجه‌ای یافت نشد",
+        "removeItem": "حذف {{label}}",
+        "clearAll": "پاک کردن همه انتخاب‌ها",
+        "addScope": "افزودن محدوده",
+        "maxReached": "حداکثر {{max}} مورد"
+      },
+      "loading": "بارگذاری گراف...",
+      "error": "خطا در بارگذاری داده‌های شبکه",
+      "empty": "داده‌ای برای نمایش وجود ندارد"
     },
     "trafficUsage": {
       "title": "مصرف ترافیک",
@@ -1232,7 +1354,14 @@
       "enableEmail": "Email",
       "sendingBoth": "۲ پیام‌رسانی ایجاد خواهد شد",
       "bothCreated": "پیام‌رسانی‌ها ایجاد شدند",
-      "atLeastOneChannel": "حداقل یک کانال را انتخاب کنید"
+      "atLeastOneChannel": "حداقل یک کانال را انتخاب کنید",
+      "customButtons": "دکمه‌های سفارشی",
+      "addCustomButton": "افزودن دکمه",
+      "customButtonLabelPlaceholder": "متن دکمه",
+      "customButtonTypeCallback": "Callback",
+      "customButtonTypeUrl": "لینک",
+      "customButtonCallbackPlaceholder": "callback_data (مثلاً back_to_menu)",
+      "customButtonUrlPlaceholder": "https://example.com"
     },
     "pinnedMessages": {
       "title": "Pinned Messages",
@@ -1317,18 +1446,40 @@
       }
     },
     "payments": {
-      "title": "تأیید پرداخت",
-      "description": "پرداخت‌های معلق در ۲۴ ساعت گذشته",
+      "title": "پرداخت‌ها",
+      "description": "جستجو و مدیریت پرداخت‌ها",
+      "searchPlaceholder": "جستجو: فاکتور، شناسه تلگرام، @نام‌کاربری، ایمیل...",
+      "searchHint": "مثال‌ها: SP-78291, @username, 123456789, user@mail.ru",
+      "searchResults": "نتایج برای: {{query}} — {{count}} یافت شد",
+      "resetSearch": "بازنشانی",
+      "statusAll": "همه",
+      "statusPending": "در انتظار",
+      "statusPaid": "پرداخت شده",
+      "statusCancelled": "لغو شده",
+      "period24h": "۲۴ساعت",
+      "period7d": "۷روز",
+      "period30d": "۳۰روز",
+      "periodAll": "همه",
+      "periodCustom": "بازه",
+      "dateFrom": "از",
+      "dateTo": "تا",
+      "applyDate": "اعمال",
+      "allMethods": "همه روش‌ها",
+      "totalCount": "کل",
+      "pendingCount": "در انتظار",
+      "paidCount": "پرداخت شده",
+      "cancelledCount": "لغو شده",
       "totalPending": "کل معلق",
       "filterByMethod": "فیلتر بر اساس روش",
+      "noPayments": "پرداختی یافت نشد",
       "paid": "پرداخت شده",
       "user": "کاربر",
       "openLink": "باز کردن لینک",
-      "checking": "در حال بررسی...",
       "checkStatus": "بررسی وضعیت",
-      "noPayments": "هیچ پرداخت معلقی نیست",
+      "checking": "در حال بررسی...",
       "prev": "قبلی",
-      "next": "بعدی"
+      "next": "بعدی",
+      "checkError": "خطا در بررسی وضعیت"
     },
     "settings": {
       "title": "تنظیمات سیستم",
@@ -1547,6 +1698,12 @@
       "adminLabel": "مدیر",
       "replyPlaceholder": "پاسخ خود را بنویسید...",
       "sendReply": "ارسال پاسخ",
+      "attachMedia": "پیوست رسانه",
+      "invalidFileType": "نوع فایل نامعتبر. از تصاویر، ویدئو (MP4, WebM) یا اسناد (PDF, DOC, TXT, ZIP) استفاده کنید.",
+      "fileTooLarge": "فایل بسیار بزرگ است. حداکثر اندازه ۱۰ مگابایت.",
+      "uploadFailed": "آپلود فایل ناموفق بود",
+      "uploading": "در حال آپلود...",
+      "uploadComplete": "آپلود شد",
       "settings": "تنظیمات",
       "settingsSubtitle": "پیکربندی سیستم تیکت و SLA",
       "settingsLoadError": "خطا در بارگذاری تنظیمات",
@@ -2826,6 +2983,7 @@
       "system": "سیستم",
       "permanent": "دائمی",
       "expired": "منقضی شده",
+      "envManaged": "مدیریت از طریق ADMIN_IDS / ADMIN_EMAILS در env",
       "revoke": "لغو",
       "revokeAriaLabel": "لغو نقش {{role}} از {{user}}",
       "table": {
@@ -3258,6 +3416,7 @@
       "linkSuccess": "حساب با موفقیت متصل شد",
       "unlinkSuccess": "اتصال حساب با موفقیت قطع شد",
       "linkError": "اتصال حساب ناموفق بود",
+      "telegramLinkUnavailable": "اتصال تلگرام موقتاً در دسترس نیست. از ربات استفاده کنید:",
       "unlinkError": "قطع اتصال ناموفق بود",
       "goToAccounts": "حساب‌های متصل",
       "linking": "در حال اتصال حساب...",
@@ -3763,6 +3922,66 @@
     },
     "warning": {
       "telegram_unresolvable": "نام کاربری تلگرام قابل تأیید نبود. ممکن است گیرنده اعلان هدیه را دریافت نکند."
+    }
+  },
+  "news": {
+    "title": "اخبار و به‌روزرسانی‌ها",
+    "filterAll": "همه",
+    "readMore": "ادامه مطلب",
+    "readTime": "دقیقه مطالعه",
+    "loadMore": "بارگذاری بیشتر",
+    "noNews": "هنوز خبری نیست",
+    "backToHome": "بازگشت",
+    "views": "بازدید",
+    "admin": {
+      "title": "مدیریت اخبار",
+      "create": "ایجاد مقاله",
+      "edit": "ویرایش",
+      "delete": "حذف",
+      "confirmDelete": "این مقاله حذف شود؟",
+      "published": "منتشر شده",
+      "draft": "پیش‌نویس",
+      "featured": "ویژه",
+      "titleLabel": "عنوان",
+      "slugLabel": "شناسه URL",
+      "categoryLabel": "دسته‌بندی",
+      "categoryColorLabel": "رنگ دسته‌بندی",
+      "tagLabel": "برچسب",
+      "excerptLabel": "توضیح کوتاه",
+      "contentLabel": "محتوا",
+      "imageLabel": "تصویر ویژه",
+      "readTimeLabel": "زمان مطالعه (دقیقه)",
+      "save": "ذخیره",
+      "saving": "در حال ذخیره...",
+      "saveError": "ذخیره مقاله ناموفق بود. لطفاً دوباره تلاش کنید.",
+      "saved": "مقاله ذخیره شد",
+      "deleted": "مقاله حذف شد",
+      "selectColor": "انتخاب رنگ {{color}}",
+      "uploading": "در حال آپلود...",
+      "dropMedia": "تصویر یا ویدیو را اینجا رها کنید",
+      "uploadError": "آپلود ناموفق بود",
+      "fileTooLarge": "فایل خیلی بزرگ است",
+      "uploadFeaturedImage": "آپلود تصویر",
+      "toolbar": {
+        "bold": "پررنگ",
+        "italic": "کج",
+        "underline": "زیرخط",
+        "strikethrough": "خط‌خورده",
+        "heading1": "عنوان ۱",
+        "heading2": "عنوان ۲",
+        "heading3": "عنوان ۳",
+        "bulletList": "لیست نقطه‌ای",
+        "orderedList": "لیست شماره‌دار",
+        "blockquote": "نقل قول",
+        "codeBlock": "بلوک کد",
+        "alignLeft": "چپ‌چین",
+        "alignCenter": "وسط‌چین",
+        "highlight": "برجسته",
+        "link": "پیوند",
+        "image": "تصویر",
+        "imageUrlPrompt": "آدرس تصویر:",
+        "linkUrlPrompt": "آدرس پیوند:"
+      }
     }
   }
 }
